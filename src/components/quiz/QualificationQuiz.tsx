@@ -4,10 +4,11 @@ import {
   evaluateAnswers,
   findOptionLabel,
   type QuizResult,
+  type RejectionReason,
 } from './quiz-config';
-import { buildWhatsAppUrl } from '../../lib/whatsapp';
+import { buildWhatsAppUrl, getWhatsAppNumber } from '../../lib/whatsapp';
 
-type Stage = 'intro' | 'questions' | 'contact' | 'result';
+type Stage = 'intro' | 'contact' | 'questions' | 'result';
 
 interface ContactData {
   nome: string;
@@ -36,50 +37,17 @@ export default function QualificationQuiz() {
 
   const currentQuestion = QUIZ_QUESTIONS[stepIndex];
   const totalSteps = QUIZ_QUESTIONS.length;
+
+  // Total de etapas: contato (1) + perguntas (totalSteps) = totalSteps + 1
   const progressPct = useMemo(() => {
     if (stage === 'intro') return 0;
-    if (stage === 'questions') return Math.round(((stepIndex + 1) / (totalSteps + 1)) * 100);
-    if (stage === 'contact') return Math.round((totalSteps / (totalSteps + 1)) * 100) + 10;
+    if (stage === 'contact') return Math.round((1 / (totalSteps + 1)) * 100);
+    if (stage === 'questions') return Math.round(((stepIndex + 2) / (totalSteps + 1)) * 100);
     return 100;
   }, [stage, stepIndex, totalSteps]);
 
   const start = () => {
-    setStage('questions');
-    setStepIndex(0);
-  };
-
-  const selectOption = (questionId: string, value: string) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }));
-  };
-
-  const advance = () => {
-    if (!answers[currentQuestion.id]) return;
-
-    if (stepIndex < totalSteps - 1) {
-      setStepIndex(stepIndex + 1);
-    } else {
-      // Avalia e decide próximo passo
-      const evaluation = evaluateAnswers(answers);
-      if (evaluation.status === 'rejected') {
-        // Rejeição imediata — pula contato
-        setResult(evaluation);
-        setStage('result');
-      } else {
-        setStage('contact');
-      }
-    }
-  };
-
-  const goBack = () => {
-    if (stage === 'contact') {
-      setStage('questions');
-      return;
-    }
-    if (stepIndex > 0) {
-      setStepIndex(stepIndex - 1);
-    } else {
-      setStage('intro');
-    }
+    setStage('contact');
   };
 
   const validateContact = (): boolean => {
@@ -98,32 +66,40 @@ export default function QualificationQuiz() {
 
   const submitContact = (e: Event) => {
     e.preventDefault();
-    if (honeypot) return; // honeypot acionado, abortar silenciosamente
+    if (honeypot) return; // honeypot acionado — abortar silenciosamente
     if (!validateContact()) return;
+    setStage('questions');
+    setStepIndex(0);
+  };
 
-    const evaluation = evaluateAnswers(answers);
-    setResult(evaluation);
-    setStage('result');
+  const selectOption = (questionId: string, value: string) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: value }));
+  };
 
-    if (evaluation.status === 'approved' || evaluation.status === 'partial') {
-      const url = buildWhatsAppUrl({
-        nome: contact.nome.trim(),
-        papel: findOptionLabel('papel', answers.papel ?? ''),
-        empresa: contact.empresa.trim(),
-        faturamento: findOptionLabel('faturamento', answers.faturamento ?? ''),
-        setor: findOptionLabel('setor', answers.setor ?? ''),
-        erp: findOptionLabel('erp', answers.erp ?? ''),
-        momento: findOptionLabel('momento', answers.momento ?? ''),
-        abertura_exito: findOptionLabel('exito', answers.exito ?? ''),
-        email: contact.email.trim(),
-        telefone: contact.telefone.trim() || undefined,
-        fitParcial: evaluation.status === 'partial',
-      });
+  const advance = () => {
+    if (!answers[currentQuestion.id]) return;
 
-      // Pequeno delay para o usuário ver a tela de sucesso antes do redirect
-      setTimeout(() => {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      }, 800);
+    if (stepIndex < totalSteps - 1) {
+      setStepIndex(stepIndex + 1);
+    } else {
+      // Última pergunta — avalia e mostra devolutiva inline
+      const evaluation = evaluateAnswers(answers);
+      setResult(evaluation);
+      setStage('result');
+    }
+  };
+
+  const goBack = () => {
+    if (stage === 'questions' && stepIndex === 0) {
+      setStage('contact');
+      return;
+    }
+    if (stage === 'questions' && stepIndex > 0) {
+      setStepIndex(stepIndex - 1);
+      return;
+    }
+    if (stage === 'contact') {
+      setStage('intro');
     }
   };
 
@@ -136,7 +112,20 @@ export default function QualificationQuiz() {
     setResult(null);
   };
 
-  const rejectionPath = (reason: string) => `/nao-elegivel?motivo=${reason}`;
+  const buildApprovedWhatsAppUrl = (): string =>
+    buildWhatsAppUrl({
+      nome: contact.nome.trim(),
+      papel: findOptionLabel('papel', answers.papel ?? ''),
+      empresa: contact.empresa.trim(),
+      faturamento: findOptionLabel('faturamento', answers.faturamento ?? ''),
+      setor: findOptionLabel('setor', answers.setor ?? ''),
+      erp: findOptionLabel('erp', answers.erp ?? ''),
+      momento: findOptionLabel('momento', answers.momento ?? ''),
+      abertura_exito: findOptionLabel('exito', answers.exito ?? ''),
+      email: contact.email.trim(),
+      telefone: contact.telefone.trim() || undefined,
+      fitParcial: result?.status === 'partial',
+    });
 
   return (
     <div class="bg-gray-50 border border-gray-200 rounded-2xl shadow-[var(--shadow-card)] overflow-hidden">
@@ -149,7 +138,7 @@ export default function QualificationQuiz() {
       </div>
 
       <div class="p-6 sm:p-10 md:p-12">
-        {/* Honeypot - hidden from real users */}
+        {/* Honeypot oculto */}
         <div
           aria-hidden="true"
           style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden;"
@@ -168,6 +157,16 @@ export default function QualificationQuiz() {
 
         {stage === 'intro' && <IntroStage onStart={start} />}
 
+        {stage === 'contact' && (
+          <ContactStage
+            contact={contact}
+            errors={contactErrors}
+            onChange={(field, value) => setContact((prev) => ({ ...prev, [field]: value }))}
+            onSubmit={submitContact}
+            onBack={goBack}
+          />
+        )}
+
         {stage === 'questions' && currentQuestion && (
           <QuestionStage
             question={currentQuestion}
@@ -180,18 +179,13 @@ export default function QualificationQuiz() {
           />
         )}
 
-        {stage === 'contact' && (
-          <ContactStage
-            contact={contact}
-            errors={contactErrors}
-            onChange={(field, value) => setContact((prev) => ({ ...prev, [field]: value }))}
-            onSubmit={submitContact}
-            onBack={goBack}
-          />
-        )}
-
         {stage === 'result' && result && (
-          <ResultStage result={result} contact={contact} onReset={reset} rejectionPath={rejectionPath} />
+          <ResultStage
+            result={result}
+            contact={contact}
+            whatsappUrl={result.status !== 'rejected' ? buildApprovedWhatsAppUrl() : null}
+            onReset={reset}
+          />
         )}
       </div>
     </div>
@@ -203,13 +197,14 @@ export default function QualificationQuiz() {
 function IntroStage({ onStart }: { onStart: () => void }) {
   return (
     <div class="text-center max-w-xl mx-auto py-4">
-      <p class="eyebrow">Sessão Estratégica</p>
+      <p class="eyebrow">Diagnóstico inicial</p>
       <h3 class="mt-4 font-display text-3xl md:text-4xl text-navy-900 leading-tight text-balance">
-        Vamos garantir que a Sessão faz sentido para a sua empresa
+        Vamos entender o seu contexto antes de marcar a Sessão
       </h3>
       <p class="mt-5 text-base text-gray-700 leading-relaxed text-pretty">
-        São 6 perguntas rápidas — cerca de 90 segundos. O objetivo é entender o seu contexto antes
-        de marcar a conversa, para que ela seja útil de verdade.
+        Primeiro coletamos seus dados de contato. Em seguida, são 6 perguntas curtas
+        sobre o porte e o momento da empresa — cerca de 90 segundos no total. Ao final,
+        você recebe uma devolutiva imediata.
       </p>
       <button
         type="button"
@@ -228,10 +223,121 @@ function IntroStage({ onStart }: { onStart: () => void }) {
         </svg>
       </button>
       <p class="mt-6 text-xs text-gray-500">
-        Suas respostas não são armazenadas — elas só são enviadas via WhatsApp se você decidir
-        prosseguir ao final.
+        Suas respostas não são armazenadas em servidor — o contexto só vai pro WhatsApp se
+        você decidir prosseguir após a devolutiva.
       </p>
     </div>
+  );
+}
+
+function ContactStage({
+  contact,
+  errors,
+  onChange,
+  onSubmit,
+  onBack,
+}: {
+  contact: ContactData;
+  errors: Partial<Record<keyof ContactData, string>>;
+  onChange: <K extends keyof ContactData>(field: K, value: ContactData[K]) => void;
+  onSubmit: (e: Event) => void;
+  onBack: () => void;
+}) {
+  return (
+    <form class="max-w-2xl mx-auto" onSubmit={onSubmit} noValidate>
+      <div class="flex items-center justify-between mb-8">
+        <p class="text-xs font-semibold uppercase tracking-widest text-copper-600">
+          Etapa 1 <span class="text-gray-400">de 2 — seus dados</span>
+        </p>
+        <button
+          type="button"
+          onClick={onBack}
+          class="text-xs font-medium text-gray-500 hover:text-navy-700 transition-colors flex items-center gap-1"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M11 7H3M3 7L6 4M3 7L6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Voltar
+        </button>
+      </div>
+
+      <h3 class="font-display text-2xl md:text-3xl text-navy-900 leading-tight text-balance">
+        Como podemos identificar você e a sua empresa?
+      </h3>
+      <p class="mt-3 text-sm text-gray-600 leading-relaxed">
+        Esses dados nos permitem preparar a Sessão na linguagem do seu setor e porte.
+      </p>
+
+      <div class="mt-7 grid grid-cols-1 md:grid-cols-2 gap-5">
+        <Field
+          label="Nome completo"
+          name="nome"
+          value={contact.nome}
+          onInput={(v) => onChange('nome', v)}
+          error={errors.nome}
+          autocomplete="name"
+          required
+        />
+        <Field
+          label="Empresa"
+          name="empresa"
+          value={contact.empresa}
+          onInput={(v) => onChange('empresa', v)}
+          error={errors.empresa}
+          autocomplete="organization"
+          required
+        />
+        <Field
+          label="E-mail corporativo"
+          name="email"
+          type="email"
+          value={contact.email}
+          onInput={(v) => onChange('email', v)}
+          error={errors.email}
+          autocomplete="email"
+          required
+        />
+        <Field
+          label="Telefone (opcional)"
+          name="telefone"
+          type="tel"
+          value={contact.telefone}
+          onInput={(v) => onChange('telefone', v)}
+          autocomplete="tel"
+        />
+      </div>
+
+      <label class="mt-6 flex items-start gap-3 cursor-pointer group">
+        <input
+          type="checkbox"
+          checked={contact.consentimento}
+          onChange={(e) => onChange('consentimento', (e.currentTarget as HTMLInputElement).checked)}
+          class="mt-1 h-4 w-4 rounded border-gray-300 text-copper-500 focus:ring-copper-500 cursor-pointer"
+        />
+        <span class="text-sm text-gray-700 leading-relaxed">
+          Concordo com a{' '}
+          <a href="/politica-privacidade" target="_blank" rel="noopener" class="text-navy-700 underline hover:text-copper-600">
+            Política de Privacidade
+          </a>{' '}
+          e autorizo o contato comercial via WhatsApp ou e-mail.
+        </span>
+      </label>
+      {errors.consentimento && (
+        <p class="mt-2 text-xs text-danger font-medium">{errors.consentimento}</p>
+      )}
+
+      <div class="mt-8 flex justify-end">
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-navy-700 hover:bg-navy-600 active:bg-navy-800 text-gray-50 font-medium rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-copper-400 focus-visible:outline-offset-2"
+        >
+          Continuar para o diagnóstico
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M3 7H11M11 7L8 4M11 7L8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </form>
   );
 }
 
@@ -252,11 +358,12 @@ function QuestionStage({
   onAdvance: () => void;
   onBack: () => void;
 }) {
+  const isLast = stepIndex === totalSteps - 1;
   return (
     <div class="max-w-2xl mx-auto">
       <div class="flex items-center justify-between mb-8">
         <p class="text-xs font-semibold uppercase tracking-widest text-copper-600">
-          Pergunta {stepIndex + 1} <span class="text-gray-400">de {totalSteps}</span>
+          Etapa 2 <span class="text-gray-400">— pergunta {stepIndex + 1} de {totalSteps}</span>
         </p>
         <button
           type="button"
@@ -327,127 +434,20 @@ function QuestionStage({
           type="button"
           onClick={onAdvance}
           disabled={!selectedValue}
-          class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-navy-700 hover:bg-navy-600 active:bg-navy-800 text-gray-50 font-medium rounded-md transition-colors disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-copper-400 focus-visible:outline-offset-2"
+          class={[
+            'inline-flex items-center justify-center gap-2 px-6 py-3 font-medium rounded-md transition-colors disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-copper-400 focus-visible:outline-offset-2',
+            isLast
+              ? 'bg-copper-500 hover:bg-copper-400 active:bg-copper-600 text-navy-900'
+              : 'bg-navy-700 hover:bg-navy-600 active:bg-navy-800 text-gray-50',
+          ].join(' ')}
         >
-          {stepIndex === totalSteps - 1 ? 'Continuar' : 'Próxima'}
+          {isLast ? 'Solicitar meu Diagnóstico' : 'Próxima'}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path d="M3 7H11M11 7L8 4M11 7L8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
       </div>
     </div>
-  );
-}
-
-function ContactStage({
-  contact,
-  errors,
-  onChange,
-  onSubmit,
-  onBack,
-}: {
-  contact: ContactData;
-  errors: Partial<Record<keyof ContactData, string>>;
-  onChange: <K extends keyof ContactData>(field: K, value: ContactData[K]) => void;
-  onSubmit: (e: Event) => void;
-  onBack: () => void;
-}) {
-  return (
-    <form class="max-w-2xl mx-auto" onSubmit={onSubmit} novalidate>
-      <div class="flex items-center justify-between mb-8">
-        <p class="text-xs font-semibold uppercase tracking-widest text-copper-600">
-          Quase lá <span class="text-gray-400">— última etapa</span>
-        </p>
-        <button
-          type="button"
-          onClick={onBack}
-          class="text-xs font-medium text-gray-500 hover:text-navy-700 transition-colors flex items-center gap-1"
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M11 7H3M3 7L6 4M3 7L6 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          Voltar
-        </button>
-      </div>
-
-      <h3 class="font-display text-2xl md:text-3xl text-navy-900 leading-tight text-balance">
-        Como podemos contatar você para marcar a Sessão?
-      </h3>
-      <p class="mt-3 text-sm text-gray-600 leading-relaxed">
-        Você será redirecionado para o nosso WhatsApp com um resumo do contexto. O agendamento é
-        feito ali mesmo.
-      </p>
-
-      <div class="mt-7 grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Field
-          label="Nome completo"
-          name="nome"
-          value={contact.nome}
-          onInput={(v) => onChange('nome', v)}
-          error={errors.nome}
-          autocomplete="name"
-          required
-        />
-        <Field
-          label="Empresa"
-          name="empresa"
-          value={contact.empresa}
-          onInput={(v) => onChange('empresa', v)}
-          error={errors.empresa}
-          autocomplete="organization"
-          required
-        />
-        <Field
-          label="E-mail corporativo"
-          name="email"
-          type="email"
-          value={contact.email}
-          onInput={(v) => onChange('email', v)}
-          error={errors.email}
-          autocomplete="email"
-          required
-        />
-        <Field
-          label="Telefone (opcional)"
-          name="telefone"
-          type="tel"
-          value={contact.telefone}
-          onInput={(v) => onChange('telefone', v)}
-          autocomplete="tel"
-        />
-      </div>
-
-      <label class="mt-6 flex items-start gap-3 cursor-pointer group">
-        <input
-          type="checkbox"
-          checked={contact.consentimento}
-          onChange={(e) => onChange('consentimento', (e.currentTarget as HTMLInputElement).checked)}
-          class="mt-1 h-4 w-4 rounded border-gray-300 text-copper-500 focus:ring-copper-500 cursor-pointer"
-        />
-        <span class="text-sm text-gray-700 leading-relaxed">
-          Concordo com a{' '}
-          <a href="/politica-privacidade" target="_blank" rel="noopener" class="text-navy-700 underline hover:text-copper-600">
-            Política de Privacidade
-          </a>{' '}
-          e autorizo o contato comercial via WhatsApp para o agendamento desta Sessão Estratégica.
-        </span>
-      </label>
-      {errors.consentimento && (
-        <p class="mt-2 text-xs text-danger font-medium">{errors.consentimento}</p>
-      )}
-
-      <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:justify-end">
-        <button
-          type="submit"
-          class="inline-flex items-center justify-center gap-2 px-7 py-4 bg-copper-500 hover:bg-copper-400 active:bg-copper-600 text-navy-900 font-medium rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-copper-400 focus-visible:outline-offset-2"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.464 3.488"/>
-          </svg>
-          Enviar e abrir WhatsApp
-        </button>
-      </div>
-    </form>
   );
 }
 
@@ -495,77 +495,203 @@ function Field({
   );
 }
 
+// ---------- Result / devolutiva inline ----------
+
 function ResultStage({
   result,
   contact,
+  whatsappUrl,
   onReset,
-  rejectionPath,
 }: {
   result: QuizResult;
   contact: ContactData;
+  whatsappUrl: string | null;
   onReset: () => void;
-  rejectionPath: (reason: string) => string;
 }) {
+  const firstName = contact.nome.trim().split(' ')[0] || '';
+
   if (result.status === 'rejected' && result.rejectionReason) {
-    // Redireciona para página de não-elegibilidade
-    if (typeof window !== 'undefined') {
-      setTimeout(() => {
-        window.location.href = rejectionPath(result.rejectionReason!);
-      }, 1500);
-    }
     return (
-      <div class="text-center max-w-lg mx-auto py-8">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-warning/10 text-warning mb-5">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M12 8V13M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h3 class="font-display text-2xl text-navy-900 leading-tight">
-          Vamos te direcionar para uma rota mais adequada
-        </h3>
-        <p class="mt-3 text-sm text-gray-700 leading-relaxed">
-          Pelo seu contexto, a Sessão Estratégica padrão pode não ser o melhor primeiro passo.
-          Estamos preparando uma resposta mais útil para você...
-        </p>
-      </div>
+      <RejectedDevolutiva
+        firstName={firstName}
+        reason={result.rejectionReason}
+        onReset={onReset}
+      />
     );
   }
 
-  const isPartial = result.status === 'partial';
-
   return (
-    <div class="text-center max-w-lg mx-auto py-6">
+    <ApprovedDevolutiva
+      firstName={firstName}
+      result={result}
+      whatsappUrl={whatsappUrl}
+      onReset={onReset}
+    />
+  );
+}
+
+function ApprovedDevolutiva({
+  firstName,
+  result,
+  whatsappUrl,
+  onReset,
+}: {
+  firstName: string;
+  result: QuizResult;
+  whatsappUrl: string | null;
+  onReset: () => void;
+}) {
+  const isPartial = result.status === 'partial';
+  return (
+    <div class="max-w-xl mx-auto py-4 text-center">
       <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-success/10 text-success mb-5">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
           <path d="M5 12L10 17L20 7" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h3 class="font-display text-2xl md:text-3xl text-navy-900 leading-tight text-balance">
-        {contact.nome ? `${contact.nome.split(' ')[0]}, sua Sessão está` : 'Sessão'} pronta para ser agendada
-      </h3>
-      <p class="mt-4 text-base text-gray-700 leading-relaxed text-pretty">
-        Estamos te redirecionando para o WhatsApp com um resumo do contexto.
-        {isPartial && ' Vamos confirmar alguns detalhes antes de marcar.'}
+
+      <p class="eyebrow text-success">
+        {isPartial ? 'Diagnóstico — fit parcial' : 'Diagnóstico positivo'}
       </p>
 
-      <div class="mt-8 inline-flex items-center gap-2 text-sm text-gray-500">
-        <svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        Abrindo WhatsApp em nova aba...
+      <h3 class="mt-3 font-display text-2xl md:text-3xl text-navy-900 leading-tight text-balance">
+        {firstName ? `${firstName}, ` : ''}sua empresa tem perfil para a Sessão Estratégica
+      </h3>
+
+      <p class="mt-4 text-base text-gray-700 leading-relaxed text-pretty">
+        {isPartial
+          ? 'Identificamos compatibilidade com nosso modelo, mas alguns pontos precisam de conversa antes de marcar — vamos alinhar isso direto no WhatsApp.'
+          : 'Pelo que você nos contou, há fit completo com o nosso método. Podemos avançar para a Sessão de 45 minutos sem custo.'}
+      </p>
+
+      <div class="mt-8 bg-gray-50 border border-gray-200 rounded-xl p-5 text-left">
+        <p class="text-xs uppercase tracking-widest text-gray-500 font-semibold mb-2">
+          Próximo passo
+        </p>
+        <p class="text-sm text-gray-800 leading-relaxed">
+          Clique abaixo para abrir o WhatsApp com um <strong>resumo do contexto já preenchido</strong>.
+          Nosso time responde em até 1 dia útil para escolher o horário da Sessão.
+        </p>
       </div>
 
-      <p class="mt-8 text-xs text-gray-500">
-        A janela não abriu?{' '}
-        <a href="/obrigado" class="text-navy-700 underline hover:text-copper-600">
-          Use o link alternativo
+      {whatsappUrl && (
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-7 inline-flex items-center justify-center gap-2 px-7 py-4 bg-copper-500 hover:bg-copper-400 active:bg-copper-600 text-navy-900 font-medium rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-copper-400 focus-visible:outline-offset-2"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.464 3.488"/>
+          </svg>
+          Abrir WhatsApp para agendar
         </a>
-        {' '}ou{' '}
+      )}
+
+      <p class="mt-6 text-xs text-gray-500">
         <button type="button" onClick={onReset} class="text-navy-700 underline hover:text-copper-600">
-          refazer o quiz
+          Refazer o diagnóstico
         </button>
-        .
       </p>
+    </div>
+  );
+}
+
+function RejectedDevolutiva({
+  firstName,
+  reason,
+  onReset,
+}: {
+  firstName: string;
+  reason: RejectionReason;
+  onReset: () => void;
+}) {
+  const number = getWhatsAppNumber();
+  const formattedNumber = `+${number.slice(0, 2)} (${number.slice(2, 4)}) ${number.slice(4, 9)}-${number.slice(9)}`;
+
+  const variants = {
+    porte: {
+      eyebrow: 'Porte fora do nosso foco hoje',
+      title: 'Hoje a Sessão Estratégica não é o melhor encaixe para a sua empresa',
+      body:
+        'Nosso modelo de êxito foi desenhado para médias empresas (faturamento acima de R$ 4,8 milhões), onde a complexidade tributária justifica o protocolo de diagnóstico que aplicamos. Para empresas em estágio inicial, o esforço-benefício costuma não compensar.',
+      callout:
+        'Quando o porte da empresa mudar, a porta segue aberta. Pode nos guardar como referência para o futuro.',
+      action: { label: 'Voltar ao topo', href: '#sessao-estrategica' },
+    },
+    dado: {
+      eyebrow: 'Antes do êxito, organização fiscal',
+      title: 'O modelo de êxito requer baseline fiscal mensurável — e podemos te ajudar a chegar lá',
+      body:
+        'Para garantir economia comprovada, partimos de dado fiscal estruturado (SPED limpo, ERP organizado). Empresas em saneamento contábil costumam entrar pelo "Projeto Zero" — uma frente paga e enxuta de organização fiscal que prepara o terreno para a Sessão Estratégica formal.',
+      callout:
+        'Conte um pouco do seu cenário pelo WhatsApp ou e-mail abaixo e desenhamos um Projeto Zero proporcional ao seu caso.',
+      action: {
+        label: `Falar com a equipe (${formattedNumber})`,
+        href: `https://wa.me/${number}?text=${encodeURIComponent(
+          'Olá! Tenho interesse em conversar sobre o Projeto Zero — saneamento fiscal antes da Sessão Estratégica.',
+        )}`,
+        external: true,
+      },
+    },
+    preco: {
+      eyebrow: 'Conversa sobre valor, não preço',
+      title: 'Trabalhamos com modelo de êxito justamente para alinhar incentivos',
+      body:
+        'Não temos tabela de preço — nosso honorário é um percentual da economia que mensuramos juntos. Se a conversa que faz sentido para você é sobre risco compartilhado e resultado mensurável, podemos retomar a qualquer momento. Caso contrário, agradecemos a visita.',
+      callout:
+        'Se quiser explorar o modelo de êxito sem foco em preço, o WhatsApp do escritório está abaixo.',
+      action: {
+        label: `Conversar pelo WhatsApp`,
+        href: `https://wa.me/${number}`,
+        external: true,
+      },
+    },
+  } as const;
+
+  const v = variants[reason];
+
+  return (
+    <div class="max-w-2xl mx-auto py-4">
+      <div class="flex items-center gap-3 mb-5">
+        <div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-warning/15 text-warning shrink-0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 8V13M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="eyebrow text-warning">{v.eyebrow}</p>
+      </div>
+
+      <h3 class="font-display text-2xl md:text-[1.75rem] text-navy-900 leading-tight text-balance">
+        {firstName ? `${firstName}, ` : ''}{v.title}
+      </h3>
+
+      <p class="mt-5 text-base text-gray-700 leading-relaxed text-pretty">
+        {v.body}
+      </p>
+
+      <div class="mt-6 p-5 bg-copper-500/8 border border-copper-500/20 rounded-lg">
+        <p class="text-sm text-navy-900 leading-relaxed">{v.callout}</p>
+      </div>
+
+      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+        <a
+          href={v.action.href}
+          {...('external' in v.action && v.action.external
+            ? { target: '_blank', rel: 'noopener noreferrer' }
+            : {})}
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-navy-700 hover:bg-navy-600 active:bg-navy-800 text-gray-50 font-medium rounded-md transition-colors"
+        >
+          {v.action.label}
+        </a>
+        <button
+          type="button"
+          onClick={onReset}
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-transparent text-navy-700 border border-navy-700/30 hover:border-navy-700 hover:bg-navy-700/5 font-medium rounded-md transition-colors"
+        >
+          Refazer o diagnóstico
+        </button>
+      </div>
     </div>
   );
 }
