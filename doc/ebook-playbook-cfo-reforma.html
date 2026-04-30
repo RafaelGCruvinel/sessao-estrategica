@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>O Playbook do CFO para a Reforma Tributária</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     Paleta da marca Sessão Estratégica
+     ============================================================ */
+  :root {
+    --navy-50: #EEF1F8;
+    --navy-100: #D6DEEC;
+    --navy-200: #A9B6D2;
+    --navy-300: #7C8FB7;
+    --navy-500: #3B5189;
+    --navy-600: #26396A;
+    --navy-700: #1B2A4E;
+    --navy-800: #111A2E;
+    --navy-900: #0B1220;
+    --navy-950: #060914;
+
+    --gray-50: #F8F9FB;
+    --gray-100: #F4F5F7;
+    --gray-200: #E9EBEF;
+    --gray-300: #D6DAE2;
+    --gray-400: #B0B6C2;
+    --gray-500: #8089A0;
+    --gray-600: #5C6478;
+    --gray-700: #3F4757;
+    --gray-800: #262B36;
+    --gray-900: #14171F;
+
+    --copper-50: #FBF3EB;
+    --copper-100: #F5E0CB;
+    --copper-200: #EAC094;
+    --copper-300: #DEA065;
+    --copper-400: #D08F58;
+    --copper-500: #B8743A;
+    --copper-600: #985C2A;
+    --copper-700: #784721;
+
+    --success: #1F6E4F;
+    --warning: #A85A1F;
+    --danger: #8C2A2A;
+
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-display: "Fraunces", "Source Serif Pro", Georgia, serif;
+  }
+
+  /* ============================================================
+     Reset + base
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--gray-800);
+    background: white;
+    font-size: 11pt;
+    line-height: 1.6;
+    font-feature-settings: "ss01", "cv01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    color: var(--navy-900);
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+
+  p { margin: 0 0 0.7em; text-wrap: pretty; }
+  strong { color: var(--navy-900); font-weight: 600; }
+  em { font-style: italic; color: var(--gray-700); }
+  a { color: var(--copper-600); text-decoration: none; border-bottom: 1px solid var(--copper-200); }
+
+  ul, ol { margin: 0 0 0.8em 1.25em; }
+  li { margin-bottom: 0.35em; }
+
+  hr { border: none; border-top: 1px solid var(--gray-200); margin: 1.5em 0; }
+
+  /* ============================================================
+     Page setup (Chrome headless / print)
+     ============================================================ */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  /* Conteúdo interno aplica suas próprias margens via padding,
+     assim a capa e o CTA ficam full-bleed (margem 0). */
+  .page {
+    padding: 26mm 24mm 28mm 24mm;
+    page-break-after: always;
+    break-after: page;
+    min-height: 297mm;
+    box-sizing: border-box;
+  }
+  .page:last-child {
+    page-break-after: auto;
+  }
+
+  /* Avoid breaks inside callouts / cards */
+  .keep-together {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  h2, h3 { page-break-after: avoid; break-after: avoid; }
+  h2 + p, h3 + p { page-break-before: avoid; }
+
+  /* ============================================================
+     CAPA — full bleed, navy escuro com noise sutil
+     ============================================================ */
+  .cover {
+    page: cover;
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 32mm 28mm;
+    background:
+      radial-gradient(ellipse at 80% 10%, rgba(184, 116, 58, 0.18), transparent 55%),
+      radial-gradient(ellipse at 10% 90%, rgba(38, 57, 106, 0.6), transparent 60%),
+      linear-gradient(180deg, var(--navy-900) 0%, var(--navy-950) 100%);
+    color: var(--gray-100);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+  .cover-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-sans);
+    font-size: 10pt;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--copper-300);
+    font-weight: 600;
+  }
+  .cover-header .mark {
+    width: 28px;
+    height: 2px;
+    background: var(--copper-500);
+  }
+  .cover-main {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .cover-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--copper-300);
+    font-weight: 600;
+    margin-bottom: 14mm;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cover-eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--copper-500);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .cover h1 {
+    font-family: var(--font-display);
+    font-size: 44pt;
+    font-weight: 500;
+    color: white;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin-bottom: 10mm;
+    max-width: 165mm;
+  }
+  .cover h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--copper-200);
+  }
+  .cover .subtitle {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 16pt;
+    line-height: 1.35;
+    color: var(--navy-100);
+    max-width: 155mm;
+    letter-spacing: -0.01em;
+  }
+  .cover .subtitle strong {
+    color: white;
+    font-weight: 500;
+  }
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: var(--font-sans);
+    font-size: 9pt;
+    color: var(--navy-200);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 8mm;
+  }
+  .cover-footer .brand {
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 10pt;
+  }
+  .cover-footer .meta {
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     Página tipográfica padrão
+     ============================================================ */
+  .page {
+    padding: 0;
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--copper-600);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5mm;
+  }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: var(--copper-500);
+  }
+
+  h1.section-title {
+    font-size: 28pt;
+    color: var(--navy-900);
+    margin-bottom: 6mm;
+    line-height: 1.05;
+    max-width: 155mm;
+  }
+
+  h2 {
+    font-size: 19pt;
+    color: var(--navy-900);
+    margin: 10mm 0 4mm;
+    line-height: 1.15;
+  }
+
+  h3 {
+    font-size: 13.5pt;
+    color: var(--navy-800);
+    margin: 7mm 0 2.5mm;
+    font-weight: 500;
+  }
+
+  h4 {
+    font-family: var(--font-sans);
+    font-size: 9.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--copper-600);
+    margin: 4mm 0 1.5mm;
+  }
+
+  /* Lead paragraph */
+  .lead {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 13pt;
+    line-height: 1.5;
+    color: var(--navy-700);
+    margin-bottom: 8mm;
+    letter-spacing: -0.005em;
+  }
+
+  /* ============================================================
+     Pull quote (frase-âncora)
+     ============================================================ */
+  .pull-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16pt;
+    line-height: 1.4;
+    color: var(--navy-800);
+    border-left: 3px solid var(--copper-500);
+    padding: 4mm 0 4mm 8mm;
+    margin: 6mm 0;
+    letter-spacing: -0.01em;
+  }
+  .pull-quote.dark {
+    color: white;
+    border-left-color: var(--copper-400);
+  }
+
+  /* ============================================================
+     Caixas e cartões
+     ============================================================ */
+  .callout {
+    background: var(--gray-50);
+    border-left: 3px solid var(--copper-500);
+    padding: 5mm 6mm;
+    margin: 5mm 0;
+    border-radius: 1px;
+  }
+  .callout.navy {
+    background: var(--navy-900);
+    color: var(--navy-100);
+    border-left-color: var(--copper-400);
+  }
+  .callout.navy h3, .callout.navy h4 { color: white; }
+  .callout.navy strong { color: white; }
+
+  /* ============================================================
+     Tabela calendário
+     ============================================================ */
+  table.calendar {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 5mm 0;
+    font-size: 10pt;
+  }
+  table.calendar thead th {
+    background: var(--navy-900);
+    color: white;
+    text-align: left;
+    padding: 3mm 4mm;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 9pt;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  table.calendar tbody td {
+    padding: 3.5mm 4mm;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+  table.calendar tbody tr:nth-child(odd) td {
+    background: var(--gray-50);
+  }
+  table.calendar tbody td:first-child {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--copper-600);
+    font-size: 11pt;
+    width: 22%;
+    white-space: nowrap;
+  }
+
+  /* ============================================================
+     Cards "Pontos cegos"
+     ============================================================ */
+  .pain-card {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    padding: 6mm 7mm 5mm;
+    margin: 5mm 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .pain-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--copper-500), var(--copper-700));
+  }
+  .pain-card .pain-num {
+    font-family: var(--font-display);
+    font-size: 32pt;
+    font-weight: 500;
+    color: var(--copper-200);
+    line-height: 1;
+    position: absolute;
+    top: 5mm;
+    right: 7mm;
+    letter-spacing: -0.04em;
+  }
+  .pain-card h3 {
+    font-size: 13pt;
+    color: var(--navy-900);
+    margin: 0 0 3mm;
+    padding-right: 18mm;
+    line-height: 1.2;
+  }
+  .pain-card .pain-meta {
+    display: grid;
+    grid-template-columns: 28mm 1fr;
+    gap: 1.5mm 4mm;
+    margin-top: 2.5mm;
+    font-size: 10pt;
+  }
+  .pain-card .pain-meta dt {
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--copper-600);
+    padding-top: 1mm;
+  }
+  .pain-card .pain-meta dd {
+    margin: 0;
+    color: var(--gray-800);
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     Checklist autodiagnóstico
+     ============================================================ */
+  .checklist {
+    list-style: none;
+    margin: 5mm 0;
+    padding: 0;
+    counter-reset: chk;
+  }
+  .checklist li {
+    counter-increment: chk;
+    position: relative;
+    padding: 3mm 4mm 3mm 18mm;
+    border-bottom: 1px solid var(--gray-200);
+    line-height: 1.5;
+    font-size: 10.5pt;
+  }
+  .checklist li::before {
+    content: "";
+    position: absolute;
+    left: 4mm;
+    top: 3.5mm;
+    width: 6mm;
+    height: 6mm;
+    border: 1.5px solid var(--navy-300);
+    border-radius: 2px;
+    background: white;
+  }
+  .checklist li::after {
+    content: counter(chk, decimal-leading-zero);
+    position: absolute;
+    left: 12mm;
+    top: 3.5mm;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 9pt;
+    color: var(--copper-600);
+    width: 6mm;
+  }
+  .checklist li {
+    padding-left: 22mm;
+  }
+
+  .score-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4mm;
+    margin: 5mm 0;
+  }
+  .score-item {
+    background: var(--gray-50);
+    border-top: 3px solid;
+    padding: 4mm;
+    border-radius: 0 0 2px 2px;
+  }
+  .score-item.green { border-top-color: var(--success); }
+  .score-item.amber { border-top-color: var(--warning); }
+  .score-item.red { border-top-color: var(--danger); }
+  .score-item .score-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 14pt;
+    color: var(--navy-900);
+    line-height: 1;
+    margin-bottom: 2mm;
+  }
+  .score-item .score-text {
+    font-size: 9pt;
+    line-height: 1.4;
+    color: var(--gray-700);
+  }
+
+  /* ============================================================
+     Plano 90 dias - timeline
+     ============================================================ */
+  .timeline {
+    margin: 6mm 0;
+  }
+  .timeline-step {
+    display: grid;
+    grid-template-columns: 32mm 1fr;
+    gap: 6mm;
+    padding: 5mm 0;
+    border-top: 1px solid var(--gray-200);
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .timeline-step:first-child { border-top: 2px solid var(--navy-900); }
+  .timeline-label {
+    font-family: var(--font-display);
+    font-weight: 500;
+  }
+  .timeline-label .days {
+    font-size: 18pt;
+    color: var(--copper-600);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .timeline-label .phase {
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--navy-700);
+    margin-top: 2mm;
+  }
+  .timeline-content h4 {
+    color: var(--navy-900);
+    text-transform: none;
+    letter-spacing: normal;
+    font-family: var(--font-display);
+    font-size: 12pt;
+    font-weight: 600;
+    margin-bottom: 2mm;
+  }
+  .timeline-content ul {
+    margin: 0 0 0 4mm;
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     KPIs / métricas
+     ============================================================ */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4mm;
+    margin: 5mm 0;
+  }
+  .kpi {
+    background: var(--navy-900);
+    color: white;
+    padding: 5mm;
+    border-radius: 3px;
+    page-break-inside: avoid;
+  }
+  .kpi .kpi-num {
+    font-family: var(--font-display);
+    font-size: 22pt;
+    font-weight: 600;
+    color: var(--copper-300);
+    line-height: 1;
+    margin-bottom: 2mm;
+  }
+  .kpi .kpi-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 10pt;
+    color: white;
+    margin-bottom: 1.5mm;
+  }
+  .kpi .kpi-desc {
+    font-size: 8.5pt;
+    line-height: 1.45;
+    color: var(--navy-200);
+  }
+
+  /* ============================================================
+     Erros
+     ============================================================ */
+  .error-list {
+    counter-reset: err;
+    list-style: none;
+    margin: 4mm 0;
+    padding: 0;
+  }
+  .error-list > li {
+    counter-increment: err;
+    position: relative;
+    padding: 4mm 0 4mm 20mm;
+    border-bottom: 1px solid var(--gray-200);
+    page-break-inside: avoid;
+    line-height: 1.55;
+    font-size: 10.5pt;
+  }
+  .error-list > li::before {
+    content: counter(err);
+    position: absolute;
+    left: 0;
+    top: 4mm;
+    width: 14mm;
+    height: 14mm;
+    border: 2px solid var(--copper-500);
+    color: var(--copper-600);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    line-height: 1;
+  }
+
+  /* ============================================================
+     Página final / CTA
+     ============================================================ */
+  .cta-page {
+    background: linear-gradient(180deg, var(--navy-900) 0%, var(--navy-950) 100%);
+    color: white;
+    width: 210mm;
+    min-height: 297mm;
+    box-sizing: border-box;
+    padding: 36mm 28mm 32mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    page-break-before: always;
+    page-break-after: avoid;
+    position: relative;
+  }
+  .cta-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+  .cta-page .eyebrow {
+    color: var(--copper-300);
+  }
+  .cta-page .eyebrow::before {
+    background: var(--copper-400);
+  }
+  .cta-page h2 {
+    color: white;
+    font-size: 28pt;
+    line-height: 1.1;
+    margin-bottom: 8mm;
+    max-width: 155mm;
+  }
+  .cta-page p {
+    color: var(--navy-100);
+    font-size: 11.5pt;
+    line-height: 1.6;
+    max-width: 155mm;
+  }
+  .cta-page p strong { color: white; }
+  .cta-block {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 3px solid var(--copper-500);
+    padding: 6mm 8mm;
+    margin: 8mm 0;
+    border-radius: 2px;
+  }
+  .cta-block .cta-line {
+    display: flex;
+    align-items: baseline;
+    gap: 4mm;
+    margin-bottom: 2mm;
+    font-size: 11pt;
+    color: white;
+  }
+  .cta-block .cta-line:last-child { margin-bottom: 0; }
+  .cta-block .cta-label {
+    font-family: var(--font-sans);
+    font-size: 8pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--copper-300);
+    width: 22mm;
+    flex-shrink: 0;
+  }
+
+  .footer-meta {
+    margin-top: auto;
+    padding-top: 10mm;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 8.5pt;
+    color: var(--navy-200);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  /* ============================================================
+     TOC
+     ============================================================ */
+  .toc {
+    list-style: none;
+    margin: 6mm 0 0 0;
+    padding: 0;
+    counter-reset: toc;
+  }
+  .toc li {
+    counter-increment: toc;
+    display: flex;
+    align-items: baseline;
+    gap: 4mm;
+    padding: 3mm 0;
+    border-bottom: 1px dotted var(--gray-300);
+    font-size: 11pt;
+  }
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--copper-500);
+    width: 12mm;
+    flex-shrink: 0;
+  }
+  .toc li .toc-title {
+    flex: 1;
+    color: var(--navy-800);
+    font-weight: 500;
+  }
+  .toc li .toc-page {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--gray-500);
+    font-size: 10pt;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     CAPA
+     ============================================================ -->
+<section class="cover">
+  <div class="cover-header">
+    <span class="mark"></span>
+    <span>Sessão Estratégica · Reforma Tributária</span>
+  </div>
+
+  <div class="cover-main">
+    <div class="cover-eyebrow">
+      <span class="dot"></span>
+      Ebook · Edição Abril/2026 · Para CFOs e Controllers
+    </div>
+    <h1>O Playbook do CFO para a <em>Reforma Tributária</em></h1>
+    <div class="subtitle">
+      Como proteger sua margem entre <strong>2026 e 2027</strong> — e descobrir o imposto que sua empresa paga a mais <strong>hoje</strong>.
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="brand">Sessão Estratégica</div>
+    <div class="meta">
+      Guia técnico · 18 páginas<br/>
+      Médias empresas · Indústria e comércio
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PARA QUEM É + TESE
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Antes de começar</div>
+  <h1 class="section-title">Para quem é este material</h1>
+
+  <p class="lead">
+    Este playbook foi escrito para você, <strong>CFO ou Controller de uma média empresa industrial ou de comércio</strong>, que precisa decidir agora — com dado real e segurança jurídica — o que fazer antes da transição apertar.
+  </p>
+
+  <p>Você se reconhece se:</p>
+  <ul>
+    <li>Já entendeu que a reforma é real e está em curso (IBS/CBS começa a valer em <strong>2026</strong>, regime pleno em <strong>2033</strong>).</li>
+    <li>Suspeita que a empresa <strong>paga mais imposto do que deveria hoje</strong>, mas não tem tempo nem estrutura para varrer cada centavo.</li>
+    <li>Tem <strong>bônus atrelado a EBITDA</strong> ou responde diretamente ao sócio-controlador — e não pode chegar em 2027 explicando por que a margem caiu 2 pontos.</li>
+    <li>Não quer "PowerPoint de consultoria": quer saber <strong>onde mexer, em quanto, e até quando</strong>.</li>
+  </ul>
+
+  <p>Se for o caso, os próximos 20 minutos de leitura valem a pena. Se não, repasse para o seu CFO.</p>
+
+  <h2 style="margin-top: 14mm;">A tese central deste documento</h2>
+  <div class="pull-quote">
+    Sua margem em 2027 não vai ser definida pela alíquota do IBS/CBS. Vai ser definida pelo que você reorganizar entre agora e o fim de 2026.
+  </div>
+
+  <p>
+    A reforma não é um evento — é uma <strong>janela de transição de 7 anos</strong> em que cada decisão (contrato, preço, cadeia, crédito, regime) reposiciona a empresa para a margem de regime pleno em 2033. Quem trata como "vou esperar a poeira baixar" entrega 1 a 3 pontos percentuais de margem que poderiam ter sido capturados.
+  </p>
+
+  <p>
+    E há um bônus: o trabalho de <strong>arrumar a casa para a reforma</strong> revela, quase sempre, <strong>imposto pago a mais hoje</strong> — créditos não tomados de PIS/COFINS, ICMS-ST, IPI, classificações fiscais (NCM) erradas, benefícios estaduais subutilizados. Esse dinheiro <em>já é seu</em>. Só falta resgatar.
+  </p>
+</section>
+
+<!-- ============================================================
+     SUMÁRIO
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">Sumário</div>
+  <h1 class="section-title">O que você vai encontrar</h1>
+
+  <ol class="toc">
+    <li>
+      <span class="toc-title">O calendário que ninguém pode ignorar</span>
+      <span class="toc-page">04</span>
+    </li>
+    <li>
+      <span class="toc-title">Os 7 pontos cegos que comem margem na transição</span>
+      <span class="toc-page">06</span>
+    </li>
+    <li>
+      <span class="toc-title">Autodiagnóstico do CFO — checklist em 12 perguntas</span>
+      <span class="toc-page">11</span>
+    </li>
+    <li>
+      <span class="toc-title">O plano de 90 dias para entrar em 2027 protegido</span>
+      <span class="toc-page">13</span>
+    </li>
+    <li>
+      <span class="toc-title">Como medir se o trabalho está funcionando</span>
+      <span class="toc-page">15</span>
+    </li>
+    <li>
+      <span class="toc-title">Erros caros (e evitáveis) que estamos vendo no mercado</span>
+      <span class="toc-page">16</span>
+    </li>
+    <li>
+      <span class="toc-title">Como funciona um diagnóstico no modelo de êxito</span>
+      <span class="toc-page">17</span>
+    </li>
+  </ol>
+</section>
+
+<!-- ============================================================
+     1. CALENDÁRIO
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">01 · Janela de transição</div>
+  <h1 class="section-title">O calendário que ninguém pode ignorar</h1>
+
+  <p class="lead">
+    A transição da Reforma Tributária não é binária. Ela acontece em <strong>camadas que se sobrepõem</strong>, e cada uma muda a equação financeira da sua empresa.
+  </p>
+
+  <table class="calendar">
+    <thead>
+      <tr>
+        <th>Período</th>
+        <th>O que acontece</th>
+        <th>Impacto direto no CFO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2026</td>
+        <td>Alíquotas-teste de CBS (0,9%) e IBS (0,1%), compensáveis com PIS/COFINS. Início efetivo do split payment para alguns setores.</td>
+        <td>Primeiro "termômetro" real. Erro de parametrização aqui já vira passivo.</td>
+      </tr>
+      <tr>
+        <td>2027</td>
+        <td>CBS substitui PIS/COFINS integralmente. IPI vai a zero (exceto Zona Franca). Imposto Seletivo entra em vigor.</td>
+        <td>Margem começa a reagir. Cadeias com muito crédito de PIS/COFINS sentem primeiro.</td>
+      </tr>
+      <tr>
+        <td>2028</td>
+        <td>Continuação da CBS plena; IBS ainda em transição estadual/municipal.</td>
+        <td>Janela para ajustar política de preços por estado antes do choque maior.</td>
+      </tr>
+      <tr>
+        <td>2029–2032</td>
+        <td>Redução gradual de ICMS/ISS (10% ao ano) e elevação correspondente do IBS.</td>
+        <td>Período mais sensível para contratos longos e logística.</td>
+      </tr>
+      <tr>
+        <td>2033</td>
+        <td><strong>Regime pleno.</strong> Só IBS, CBS e Imposto Seletivo (mais IPI residual da ZFM).</td>
+        <td>Quem não reorganizou cadeia, contratos e cálculo de preço chega aqui no prejuízo.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <h4>Implicação prática</h4>
+    <p style="margin: 0;">Decisões tomadas em <strong>2026 e 2027</strong> — sobre contratos, formação de preço, localização de estoque e estrutura societária — produzem efeitos que se acumulam até 2033. Não há "deixar para depois" sem custo.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     2. PONTOS CEGOS
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">02 · Mapeamento</div>
+  <h1 class="section-title">Os 7 pontos cegos que comem margem na transição</h1>
+
+  <p class="lead">
+    Em diagnósticos que rodamos em médias empresas industriais e de varejo, estes são os pontos que mais aparecem. Você provavelmente tem <strong>pelo menos 4 dos 7</strong>.
+  </p>
+
+  <div class="pain-card">
+    <span class="pain-num">01</span>
+    <h3>Origem × destino: a virada silenciosa do ICMS</h3>
+    <dl class="pain-meta">
+      <dt>O que muda</dt>
+      <dd>O ICMS, hoje cobrado majoritariamente na <strong>origem</strong>, está sendo gradualmente substituído pelo IBS, cobrado no <strong>destino</strong>. Empresa com matriz em estado "produtor" e clientes espalhados pelo Brasil tem a equação de competitividade interestadual virada de cabeça para baixo.</dd>
+      <dt>Onde dói</dt>
+      <dd>Preços de tabela travados, política de frete, decisão de onde abrir CD, contratos de longo prazo com cliente em outro estado.</dd>
+      <dt>Agir agora</dt>
+      <dd>Mapa de <strong>vendas por UF de destino × margem real</strong> simulando 2027, 2030 e 2033. Sem esse mapa, você está dirigindo de olhos fechados.</dd>
+    </dl>
+  </div>
+
+  <div class="pain-card">
+    <span class="pain-num">02</span>
+    <h3>Créditos de PIS/COFINS dos últimos 5 anos</h3>
+    <dl class="pain-meta">
+      <dt>O que muda</dt>
+      <dd>PIS/COFINS deixa de existir em 2027. Créditos não tomados ou não revisados nos últimos 5 anos (prazo prescricional) <strong>viram pó</strong> se você não agir.</dd>
+      <dt>Onde dói</dt>
+      <dd>Itens de uso e consumo, frete sobre venda, embalagens, energia elétrica em parte da operação, insumos com decisão judicial favorável recente, exclusão do ICMS da base.</dd>
+      <dt>Agir agora</dt>
+      <dd>Varredura sistemática dos últimos 60 meses cruzando SPED Contribuições × notas fiscais × contábil. Toda média empresa que não fez isso nos últimos 24 meses tem <strong>dinheiro em cima da mesa</strong>.</dd>
+    </dl>
+  </div>
+
+  <div class="pain-card">
+    <span class="pain-num">03</span>
+    <h3>Estoque de ICMS-ST no final do regime</h3>
+    <dl class="pain-meta">
+      <dt>O que muda</dt>
+      <dd>A substituição tributária do ICMS sobre cadeias longas (autopeças, bebidas, cosméticos, materiais de construção, eletrônicos) deixa de existir progressivamente. Empresas no meio ou fim da cadeia ficam com <strong>estoque cujo ICMS foi recolhido antecipadamente e nunca será aproveitado se ninguém pedir</strong>.</dd>
+      <dt>Onde dói</dt>
+      <dd>Distribuidores, atacadistas, redes de varejo com estoque alto. Pode ser um ativo escondido de <strong>3% a 8% do valor do estoque</strong> dependendo do setor.</dd>
+      <dt>Agir agora</dt>
+      <dd>Inventário tributário do estoque com data de corte definida e tese para repetição ou aproveitamento.</dd>
+    </dl>
+  </div>
+
+  <div class="pain-card">
+    <span class="pain-num">04</span>
+    <h3>Contratos longos sem cláusula de repactuação tributária</h3>
+    <dl class="pain-meta">
+      <dt>O que muda</dt>
+      <dd>Contratos de fornecimento, locação, prestação continuada e fornecimento industrial assinados antes da reforma quase sempre <strong>não têm cláusula de reequilíbrio tributário</strong> específica para IBS/CBS.</dd>
+      <dt>Onde dói</dt>
+      <dd>Se o seu insumo subir de carga porque o fornecedor perde benefício, <strong>você absorve</strong>. Se você perde benefício e seu cliente se recusa a repactuar, <strong>você absorve</strong>.</dd>
+      <dt>Agir agora</dt>
+      <dd>Triagem dos 20 maiores contratos por valor, identificação de cláusula tributária, plano de aditivo escalonado entre 2026 e 2028. <em>Aditivar antes do choque é negociação; aditivar depois é guerra.</em></dd>
+    </dl>
+  </div>
+</section>
+
+<!-- continuação pontos cegos -->
+<section class="page">
+  <div class="pain-card">
+    <span class="pain-num">05</span>
+    <h3>NCM e CST com erro estrutural</h3>
+    <dl class="pain-meta">
+      <dt>O que muda</dt>
+      <dd>NCM errado afeta IPI hoje, IBS/CBS amanhã, regime específico (se aplicável) e benefício fiscal. Em diagnósticos, vemos com frequência <strong>5% a 15% dos itens cadastrados em NCM equivocado</strong>.</dd>
+      <dt>Onde dói</dt>
+      <dd>Autuação retroativa, perda de benefício, alíquota efetiva mais alta do que a devida, recolhimento a maior por anos.</dd>
+      <dt>Agir agora</dt>
+      <dd>Auditoria de NCM nos itens responsáveis por 80% do faturamento (Pareto). Trabalho de 30 a 60 dias com time fiscal + engenharia de produto.</dd>
+    </dl>
+  </div>
+
+  <div class="pain-card">
+    <span class="pain-num">06</span>
+    <h3>Benefícios estaduais (ICMS) e a "convalidação" da LC 160</h3>
+    <dl class="pain-meta">
+      <dt>O que muda</dt>
+      <dd>Muitos benefícios concedidos sem anuência do CONFAZ foram convalidados pela LC 160/2017, mas com <strong>regras específicas de aproveitamento e prazo</strong>. Com a transição do ICMS para o IBS, há regime de compensação financeira via <strong>Fundo de Compensação de Benefícios Fiscais</strong> até 2032.</dd>
+      <dt>Onde dói</dt>
+      <dd>Empresa com TARE, regime especial, crédito presumido ou redução de base — sem monitoramento dos requisitos formais — pode perder o benefício e ainda ficar fora do fundo de compensação.</dd>
+      <dt>Agir agora</dt>
+      <dd>Auditoria do benefício atual + projeção do valor a receber do fundo + plano de transição até 2032.</dd>
+    </dl>
+  </div>
+
+  <div class="pain-card">
+    <span class="pain-num">07</span>
+    <h3>Não-cumulatividade plena: o crédito que você ainda não está tomando</h3>
+    <dl class="pain-meta">
+      <dt>O que muda</dt>
+      <dd>O IBS/CBS adota <strong>não-cumulatividade plena</strong> — em tese, tudo o que entra na operação gera crédito, salvo lista taxativa de uso pessoal. Mais amplo do que o regime atual de PIS/COFINS.</dd>
+      <dt>Onde dói (a favor)</dt>
+      <dd>Em médias indústrias e varejos, isso pode significar <strong>0,5 a 2 pontos percentuais de carga efetiva a menos</strong>, <em>desde que</em> a contabilidade esteja parametrizada para capturar.</dd>
+      <dt>Agir agora</dt>
+      <dd>Mapa de despesas por natureza × regime atual × regime futuro. Ajustar plano de contas e parametrização do ERP <strong>antes</strong> de 2026 para não perder o primeiro ano.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================================================
+     3. AUTODIAGNÓSTICO
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">03 · Autodiagnóstico</div>
+  <h1 class="section-title">12 perguntas para o CFO responder hoje</h1>
+
+  <p class="lead">
+    Se você responder <strong>"não" ou "não sei"</strong> para 4 ou mais destas perguntas, sua empresa está exposta o suficiente para justificar um diagnóstico formal.
+  </p>
+
+  <ol class="checklist">
+    <li>Sei, em R$, qual o impacto líquido da reforma na minha margem em 2027 e em 2030.</li>
+    <li>Tenho mapa de vendas por UF de destino com margem real comparada (regime atual × IBS).</li>
+    <li>Fiz revisão de créditos de PIS/COFINS dos últimos 60 meses nos últimos 24 meses.</li>
+    <li>Sei o valor do meu estoque de ICMS-ST a recuperar até o fim do regime.</li>
+    <li>Os 20 maiores contratos da empresa têm cláusula de repactuação tributária para IBS/CBS.</li>
+    <li>Os NCMs dos itens que somam 80% do faturamento foram auditados nos últimos 24 meses.</li>
+    <li>Sei quais dos meus benefícios estaduais entram no fundo de compensação e em que valor.</li>
+    <li>Meu ERP e plano de contas estão parametrizados para capturar a não-cumulatividade plena do IBS/CBS.</li>
+    <li>Tenho política de preços diferenciada por UF preparada para a virada origem-destino.</li>
+    <li>Sei se algum dos meus produtos cai em <strong>regime específico</strong> (combustíveis, serviços financeiros, planos de saúde, operações imobiliárias, hotelaria, parques, agências de viagem) ou em <strong>Imposto Seletivo</strong>.</li>
+    <li>Tenho parecer jurídico sobre as teses tributárias que minha empresa adota hoje.</li>
+    <li>Tenho um plano escrito, com responsáveis e datas, para chegar em 2027 com a casa em ordem.</li>
+  </ol>
+</section>
+
+<section class="page">
+  <h2>Como ler o resultado</h2>
+  <p>O número de "não" é seu indicador de exposição. Não é exato — mas é direcional, e na prática preditivo.</p>
+
+  <div class="score-box">
+    <div class="score-item green">
+      <div class="score-label">0–2 "não"</div>
+      <div class="score-text">Acima da média do mercado. Refine, monitore, mantenha a governança trimestral.</div>
+    </div>
+    <div class="score-item amber">
+      <div class="score-label">3–5 "não"</div>
+      <div class="score-text">Exposição relevante. Diagnóstico formal nos próximos 90 dias é a recomendação direta.</div>
+    </div>
+    <div class="score-item red">
+      <div class="score-label">6+ "não"</div>
+      <div class="score-text">Exposição alta. Trate como prioridade de diretoria. Cada trimestre de atraso compõe perda.</div>
+    </div>
+  </div>
+
+  <div class="callout navy keep-together">
+    <h4 style="color: var(--copper-300);">Um aviso honesto</h4>
+    <p style="margin: 0; color: white;">
+      A maioria das médias empresas com quem conversamos marca entre 5 e 9 "não". Não é falha do CFO — é o tamanho do problema. A reforma criou uma agenda de 7 anos sem que ninguém tenha aumentado o tamanho da equipe interna.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. PLANO DE 90 DIAS
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">04 · Roadmap de execução</div>
+  <h1 class="section-title">O plano de 90 dias para entrar em 2027 protegido</h1>
+
+  <p class="lead">
+    Para um CFO que decide hoje começar a se preparar de forma estruturada — sem aumentar headcount, sem virar projeto interno paralelo.
+  </p>
+
+  <div class="timeline">
+    <div class="timeline-step">
+      <div class="timeline-label">
+        <div class="days">Dias 1–30</div>
+        <div class="phase">Diagnóstico</div>
+      </div>
+      <div class="timeline-content">
+        <h4>Mapear a exposição com dado real</h4>
+        <ul>
+          <li>Extração de <strong>SPED Fiscal, SPED Contribuições, ECD e ECF</strong> dos últimos 60 meses.</li>
+          <li>Mapa <strong>origem × destino</strong> das vendas por UF.</li>
+          <li>Inventário de benefícios fiscais ativos (federais e estaduais).</li>
+          <li>Identificação de regime específico ou Imposto Seletivo aplicável.</li>
+          <li>Triagem dos 20 maiores contratos por valor.</li>
+          <li><strong>Entrega:</strong> relatório de exposição com valores estimados por frente — créditos a recuperar, risco de margem, ganho potencial de não-cumulatividade plena.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="timeline-label">
+        <div class="days">Dias 31–60</div>
+        <div class="phase">Plano de captura</div>
+      </div>
+      <div class="timeline-content">
+        <h4>Priorizar e fundamentar</h4>
+        <ul>
+          <li>Priorização das frentes por <strong>R$ × esforço × risco jurídico</strong>.</li>
+          <li>Pareceres técnicos para cada tese que será adotada.</li>
+          <li>Plano de revisão de NCM/CST para os itens-chave.</li>
+          <li>Modelo de cláusula tributária padrão para novos contratos e aditivos para os existentes.</li>
+          <li>Plano de parametrização do ERP para 2026.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-step">
+      <div class="timeline-label">
+        <div class="days">Dias 61–90</div>
+        <div class="phase">Implementação</div>
+      </div>
+      <div class="timeline-content">
+        <h4>Capturar valor e blindar</h4>
+        <ul>
+          <li>Início da recuperação de créditos (administrativa ou judicial, conforme tese).</li>
+          <li>Aditivos contratuais nos top-5 contratos sensíveis.</li>
+          <li>Reparametrização do ERP em ambiente de teste.</li>
+          <li>Treinamento do time fiscal interno.</li>
+          <li>Reunião de governança com diretoria + parecer formal arquivado.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. KPIs
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">05 · Governança</div>
+  <h1 class="section-title">Como medir se o trabalho está funcionando</h1>
+
+  <p class="lead">
+    Três indicadores que cabem em <strong>um slide trimestral</strong> para o conselho ou sócio-controlador.
+  </p>
+
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-num">01</div>
+      <div class="kpi-title">Carga tributária efetiva (%)</div>
+      <div class="kpi-desc">Total de tributos sobre receita bruta. Comparar com trimestre anterior e mesmo trimestre do ano anterior. Tendência deve cair.</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num">02</div>
+      <div class="kpi-title">Créditos recuperados (R$)</div>
+      <div class="kpi-desc">Soma de PIS/COFINS, ICMS, ICMS-ST e IPI efetivamente compensados ou ressarcidos no período.</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-num">03</div>
+      <div class="kpi-title">Exposição residual (R$)</div>
+      <div class="kpi-desc">Soma das frentes ainda não tratadas no mapa de pontos cegos. Deve cair a cada trimestre.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top: 12mm;">Indicadores operacionais para a Controller</h3>
+  <p>Em paralelo, três métricas para o time fiscal interno acompanhar mês a mês:</p>
+  <ul>
+    <li><strong>% de itens com NCM auditado</strong> nos últimos 12 meses.</li>
+    <li><strong>% de notas com CST</strong> consistente com o cadastro.</li>
+    <li><strong>Tempo médio</strong> entre fato gerador de crédito e tomada efetiva.</li>
+  </ul>
+
+  <div class="callout">
+    <p style="margin: 0;">
+      Se você pediu o relatório e seu time não consegue produzir esses números em 5 dias úteis, o problema não é a reforma — é que falta instrumentação básica. Esse, por si só, é um achado importante.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. ERROS
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">06 · Riscos comuns</div>
+  <h1 class="section-title">Erros caros (e evitáveis) que estamos vendo</h1>
+
+  <p class="lead">
+    Cinco padrões que vimos repetir em médias empresas e que custaram caro.
+  </p>
+
+  <ol class="error-list">
+    <li>
+      <strong>"Meu contador já cuida disso."</strong> O contador opera o dia a dia — guias, declarações, fechamento. Diagnóstico estrutural de oportunidades é outra disciplina, com outro tempo e outras ferramentas. Não é falha do contador; é escopo diferente.
+    </li>
+    <li>
+      <strong>"Vamos esperar a regulamentação se acomodar."</strong> A LC 214/2025 e as normas infralegais já fixam o suficiente para decisão. Quem espera 2027 perde o primeiro ano de teste e a maior janela de recuperação de PIS/COFINS.
+    </li>
+    <li>
+      <strong>"A Big4 já está olhando."</strong> Big4 entrega excelente trabalho técnico — em modelo de honorário fixo elevado e raramente assumindo risco. Para média empresa, modelo de êxito alinha incentivos: você só paga se houver economia comprovada.
+    </li>
+    <li>
+      <strong>"Vou usar a tese mais agressiva possível."</strong> Tese sem fundamento vira passivo daqui a 5 anos com multa e juros. Segurança jurídica não é detalhe — é o ativo principal.
+    </li>
+    <li>
+      <strong>"Recuperação de crédito é só protocolar PER/DCOMP."</strong> Não é. Cada tese exige fundamentação contábil + jurídica + reconciliação com o ERP. Atalho aqui é o caminho mais curto para autuação.
+    </li>
+  </ol>
+</section>
+
+<!-- ============================================================
+     7. DIAGNÓSTICO MODELO DE ÊXITO
+     ============================================================ -->
+<section class="page">
+  <div class="eyebrow">07 · Como trabalhamos</div>
+  <h1 class="section-title">Diagnóstico no modelo de êxito</h1>
+
+  <p class="lead">
+    Como funciona, em uma página, o trabalho que oferecemos.
+  </p>
+
+  <h3>Diagnóstico inicial</h3>
+  <p><strong>Sem custo</strong> para a sua empresa. Equipe analisa SPED, ECD, ECF e contratos-chave em <strong>15 a 30 dias</strong>.</p>
+
+  <h3>Relatório de exposição e oportunidades</h3>
+  <p>Documento com <strong>valores estimados por frente</strong>, prazos e nível de segurança jurídica de cada tese. É o material que a Controller leva para a reunião com a diretoria — não um PowerPoint vago.</p>
+
+  <h3>Implementação</h3>
+  <p>Feita pela nossa equipe, <strong>não jogada no colo do seu time interno</strong>. Pareceres assinados, parametrização de ERP, recuperação de créditos, modelo de contrato.</p>
+
+  <h3>Honorário 100% de êxito</h3>
+  <p>Percentual fixo apenas sobre a economia tributária <strong>efetivamente comprovada e capturada</strong> pela empresa. Sem economia, sem honorário. <strong>Sem fixo. Sem hora.</strong></p>
+
+  <h3>Diferencial</h3>
+  <p>Combinação <strong>jurídico + contábil + tecnologia</strong> em um único time. Pareceres robustos, dado real do SPED, simulação de cenários sob a nova regra. Você não paga três fornecedores diferentes para fazer um trabalho que precisa estar integrado.</p>
+
+  <div class="callout keep-together">
+    <h4>Por que êxito e não fixo</h4>
+    <p style="margin: 0;">
+      Se a gente não confia que vai entregar resultado, não cobra. Se a gente cobra, é porque já viu, no diagnóstico, onde está o dinheiro. <strong>O risco é nosso, não seu.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA FINAL — página dark
+     ============================================================ -->
+<section class="cta-page">
+  <div class="eyebrow" style="position: relative; z-index: 1;">Próximo passo</div>
+  <h2 style="position: relative; z-index: 1;">Se você marcou 4 ou mais "não" no autodiagnóstico, conversemos.</h2>
+
+  <p style="position: relative; z-index: 1;">
+    Trinta minutos. <strong>Sem compromisso, sem proposta.</strong> Apenas para entender se faz sentido rodar um diagnóstico formal na sua empresa. Você sai da reunião com clareza — não com mais um PDF para arquivar.
+  </p>
+
+  <div class="cta-block" style="position: relative; z-index: 1;">
+    <div class="cta-line">
+      <span class="cta-label">Agendar</span>
+      <span>[link de agendamento]</span>
+    </div>
+    <div class="cta-line">
+      <span class="cta-label">E-mail</span>
+      <span>[contato@seudominio.com.br]</span>
+    </div>
+    <div class="cta-line">
+      <span class="cta-label">Site</span>
+      <span>[seudominio.com.br]</span>
+    </div>
+  </div>
+
+  <div style="position: relative; z-index: 1; margin-top: 8mm;">
+    <h4 style="color: var(--copper-300);">Sobre quem escreveu este documento</h4>
+    <p>
+      Escritório de advocacia tributária com atuação nacional, dedicado a um único produto: <strong>redução de carga tributária à luz da Reforma Tributária</strong>, no modelo de êxito, para médias empresas de indústria e comércio. Combinamos jurídico, contábil e tecnologia em um único time. <strong>Só recebemos quando você economiza.</strong>
+    </p>
+  </div>
+
+  <div class="footer-meta" style="position: relative; z-index: 1;">
+    Este documento tem caráter informativo e não constitui parecer jurídico ou contábil. Cada operação tem particularidades que precisam ser analisadas no caso concreto.<br/>
+    Versão 1.0 — Abril/2026 · Sessão Estratégica
+  </div>
+</section>
+
+</body>
+</html>

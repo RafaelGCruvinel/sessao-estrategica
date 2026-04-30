@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Posts Instagram — Reforma Tributária</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #0B1B2B;
+    --ink-2:      #122A40;
+    --ink-line:   #1E3A55;
+    --gold:       #C9A961;
+    --gold-soft:  #8A7544;
+    --cream:      #F5EFE2;
+    --cream-2:    #E8DFC9;
+    --paper:      #FBF7EE;
+    --rule:       rgba(201,169,97,0.35);
+    --rule-soft:  rgba(245,239,226,0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #0F1620;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .help {
+    max-width: 1080px;
+    margin: 32px auto 8px;
+    padding: 18px 24px;
+    background: #1A2434;
+    border: 1px solid #2A3A52;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #B8C4D6;
+  }
+  .help strong { color: var(--gold); font-weight: 600; }
+
+  .stage {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 24px 0 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  /* ============ POST CONTAINER ============ */
+  .post {
+    width: 1080px;
+    height: 1350px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+
+  .frame {
+    position: absolute;
+    inset: 36px;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .mark {
+    position: absolute;
+    top: 56px;
+    left: 76px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .mark .dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .post-num {
+    position: absolute;
+    top: 52px;
+    right: 76px;
+    z-index: 3;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    color: var(--gold-soft);
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 56px;
+    left: 76px;
+    right: 76px;
+    z-index: 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,239,226,0.55);
+    font-weight: 500;
+  }
+  .footer .handle { color: var(--gold); letter-spacing: 0.16em; }
+
+  .body {
+    position: absolute;
+    inset: 0;
+    padding: 160px 96px 130px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ============ POST 1 — MANIFESTO ============ */
+  .p1 { background: var(--ink); }
+  .p1 .body { justify-content: center; }
+  .p1 .eyebrow {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 28px;
+    letter-spacing: 0.01em;
+  }
+  .p1 h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 88px;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+  }
+  .p1 h1 em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 300;
+  }
+  .p1 .divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 44px 0;
+  }
+  .p1 .sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.45;
+    color: var(--cream-2);
+    max-width: 760px;
+  }
+
+  /* ============ POST 2 — 3 SINAIS ============ */
+  .p2 { background: var(--ink); }
+  .p2 .body { padding-top: 150px; }
+  .p2 .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .p2 h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+    color: var(--cream);
+    margin-bottom: 64px;
+    max-width: 800px;
+  }
+  .p2 h1 em { font-style: italic; color: var(--gold); }
+  .p2 .list {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+  .p2 .item {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 24px;
+    align-items: start;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .p2 .item .n {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--gold);
+  }
+  .p2 .item h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .p2 .item p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.55;
+    color: rgba(245,239,226,0.7);
+  }
+
+  /* ============ POST 3 — TIMELINE ============ */
+  .p3 { background: var(--ink); }
+  .p3 .body { padding-top: 150px; }
+  .p3 .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .p3 .years {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin-bottom: 64px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .p3 .year {
+    padding: 36px 18px 30px;
+    border-right: 1px solid var(--rule);
+    text-align: left;
+  }
+  .p3 .year:last-child { border-right: none; }
+  .p3 .year .num {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 78px;
+    line-height: 1;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+  .p3 .year .verb {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--gold);
+    margin-top: 14px;
+  }
+  .p3 .year.dim .num { color: rgba(245,239,226,0.4); }
+  .p3 .year.dim .verb { color: var(--gold-soft); }
+  .p3 h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 52px;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--cream);
+    margin-bottom: 28px;
+    max-width: 760px;
+  }
+  .p3 h1 em { font-style: italic; color: var(--gold); }
+  .p3 .sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--cream-2);
+    max-width: 760px;
+  }
+
+  /* ============ POST 4 — SUCCESS FEE ============ */
+  .p4 { background: var(--cream); color: var(--ink); }
+  .p4 .frame { border-color: rgba(11,27,43,0.18); }
+  .p4 .mark { color: var(--ink); }
+  .p4 .mark .dot { background: var(--gold); }
+  .p4 .post-num { color: rgba(11,27,43,0.45); }
+  .p4 .footer { color: rgba(11,27,43,0.55); }
+  .p4 .footer .handle { color: var(--ink); }
+
+  .p4 .body { justify-content: center; padding-top: 130px; padding-bottom: 130px; }
+  .p4 .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .p4 h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    margin-bottom: 38px;
+  }
+  .p4 h1 em { font-style: italic; color: var(--gold-soft); }
+  .p4 .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid rgba(11,27,43,0.2);
+    margin-top: 28px;
+  }
+  .p4 .col {
+    padding: 30px 24px 0 0;
+  }
+  .p4 .col + .col {
+    padding-left: 36px;
+    border-left: 1px solid rgba(11,27,43,0.2);
+  }
+  .p4 .col .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .p4 .col .val {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .p4 .col .desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(11,27,43,0.7);
+  }
+
+  /* ============ POST 5 — TRÊS PILARES ============ */
+  .p5 { background: var(--ink); }
+  .p5 .body { justify-content: center; }
+  .p5 .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .p5 .pillars {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 96px;
+    line-height: 1;
+    letter-spacing: -0.022em;
+    color: var(--cream);
+    margin-bottom: 56px;
+  }
+  .p5 .pillars span {
+    display: block;
+  }
+  .p5 .pillars .acc {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 300;
+  }
+  .p5 .divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 36px;
+  }
+  .p5 .sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--cream-2);
+    max-width: 760px;
+  }
+  .p5 .sub strong {
+    color: var(--cream);
+    font-weight: 500;
+  }
+
+  /* ============ POST 6 — CTA ============ */
+  .p6 { background: var(--ink); }
+  .p6 .body { padding-top: 160px; }
+  .p6 .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .p6 h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 68px;
+    line-height: 1.06;
+    letter-spacing: -0.018em;
+    color: var(--cream);
+    margin-bottom: 14px;
+  }
+  .p6 h1 em { font-style: italic; color: var(--gold); }
+  .p6 .lede {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--cream-2);
+    margin-bottom: 56px;
+    max-width: 760px;
+  }
+  .p6 .specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    margin-bottom: 56px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .p6 .spec {
+    background: var(--ink);
+    padding: 24px 28px;
+  }
+  .p6 .spec .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--gold-soft);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .p6 .spec .val {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--cream);
+  }
+  .p6 .spec .val em { font-style: italic; color: var(--gold); }
+  .p6 .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px 32px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+  .p6 .cta .arrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+  }
+
+  /* ============ POST 7 — WORD ROTATOR (animado) ============ */
+  .p7 { background: var(--ink); }
+  .p7 .body { justify-content: center; }
+  .p7 .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .p7 h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 72px;
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+    color: var(--cream);
+  }
+  .p7 .rot {
+    display: block;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    margin-top: 4px;
+  }
+  .p7 .rot-track {
+    display: flex;
+    flex-direction: column;
+    animation: rotate-words 18s infinite;
+  }
+  .p7 .rot-track span {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 84px;
+    line-height: 100px;
+    height: 100px;
+    color: var(--gold);
+    white-space: nowrap;
+    letter-spacing: -0.015em;
+  }
+  @keyframes rotate-words {
+    0%, 14%   { transform: translateY(0); }
+    18%, 32%  { transform: translateY(-100px); }
+    36%, 50%  { transform: translateY(-200px); }
+    54%, 68%  { transform: translateY(-300px); }
+    72%, 86%  { transform: translateY(-400px); }
+    90%, 100% { transform: translateY(-500px); }
+  }
+  .p7 .divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 56px 0 32px;
+  }
+  .p7 .sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.45;
+    color: var(--cream-2);
+    max-width: 760px;
+  }
+  .p7 .sub strong { color: var(--cream); font-weight: 500; }
+
+  /* ============ POST 8 — COUNTDOWN (animado) ============ */
+  @property --countdown {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: false;
+  }
+  .p8 { background: var(--ink); }
+  .p8 .body { justify-content: center; padding-top: 130px; padding-bottom: 130px; }
+  .p8 .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .p8 .counter {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 320px;
+    line-height: 0.92;
+    color: var(--gold);
+    letter-spacing: -0.045em;
+    --countdown: 0;
+    animation: count-up 7s ease-out infinite;
+    counter-reset: c var(--countdown);
+    margin-bottom: 4px;
+    font-feature-settings: "tnum" 1;
+  }
+  .p8 .counter::before { content: counter(c); }
+  @keyframes count-up {
+    0%   { --countdown: 0; }
+    60%  { --countdown: 246; }
+    100% { --countdown: 246; }
+  }
+  .p8 .unit {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 56px;
+    color: var(--cream);
+    margin-bottom: 36px;
+    letter-spacing: -0.01em;
+  }
+  .p8 .divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 28px;
+  }
+  .p8 h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    color: var(--cream);
+    margin-bottom: 18px;
+    max-width: 800px;
+  }
+  .p8 h1 em { font-style: italic; color: var(--gold); }
+  .p8 .sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.55;
+    color: rgba(245,239,226,0.7);
+    max-width: 760px;
+  }
+
+  /* ============ POST 9 — BARS (animado) ============ */
+  .p9 { background: var(--ink); }
+  .p9 .body { padding-top: 150px; }
+  .p9 .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .p9 h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 56px;
+    line-height: 1.1;
+    letter-spacing: -0.018em;
+    color: var(--cream);
+    margin-bottom: 64px;
+    max-width: 760px;
+  }
+  .p9 h1 em { font-style: italic; color: var(--gold); }
+  .p9 .bars {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+    margin-bottom: 52px;
+  }
+  .p9 .bar-row {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 14px;
+  }
+  .p9 .bar-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 21px;
+    color: var(--cream);
+  }
+  .p9 .bar-label .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .p9 .bar {
+    height: 6px;
+    background: rgba(201,169,97,0.14);
+    position: relative;
+    overflow: hidden;
+  }
+  .p9 .bar .fill {
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation-duration: 4.2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .p9 .bar.b1 .fill { animation-name: fill-1; animation-delay: 0s; }
+  .p9 .bar.b2 .fill { animation-name: fill-2; animation-delay: 0.35s; }
+  .p9 .bar.b3 .fill { animation-name: fill-3; animation-delay: 0.7s; }
+  @keyframes fill-1 { from { transform: scaleX(0); } to { transform: scaleX(0.82); } }
+  @keyframes fill-2 { from { transform: scaleX(0); } to { transform: scaleX(0.58); } }
+  @keyframes fill-3 { from { transform: scaleX(0); } to { transform: scaleX(0.72); } }
+  .p9 .sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.55;
+    color: rgba(245,239,226,0.75);
+    max-width: 760px;
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+  }
+  .p9 .sub strong { color: var(--cream); font-weight: 500; }
+
+  /* ============ CAPTIONS ============ */
+  .caption {
+    max-width: 1080px;
+    margin: -32px auto 0;
+    padding: 22px 32px;
+    background: #182334;
+    border: 1px solid #2A3A52;
+    border-radius: 0 0 6px 6px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #C8D2E2;
+  }
+  .caption .cap-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .caption p { margin-bottom: 10px; }
+  .caption p:last-child { margin-bottom: 0; }
+  .caption .tags { color: #6F8AA8; font-size: 13px; }
+
+  @media print {
+    body { background: white; }
+    .help, .caption { display: none; }
+    .stage { gap: 0; padding: 0; }
+    .post { box-shadow: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<div class="help">
+  <strong>Como usar:</strong> abra este arquivo no navegador, dê zoom até cada post caber na sua tela
+  (cada um tem 1080×1350 px — formato vertical do Instagram) e use a ferramenta de captura de tela do Windows
+  (<strong>Win + Shift + S</strong>) para recortar cada post. As legendas para colar no Instagram estão logo abaixo
+  de cada peça.<br><br>
+  <strong>Posts 07–09 são animados (loop).</strong> Para publicar como Reel ou Story, use a Game Bar do Windows
+  (<strong>Win + G → Capturar</strong>) ou OBS/ShareX para gravar a tela durante 8–12 segundos enquanto o post anima.
+  Depois é só subir o vídeo no Instagram.
+</div>
+
+<div class="stage">
+
+  <!-- ============================================== POST 1 ============================================== -->
+  <article class="post p1">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>Reforma Tributária</div>
+    <div class="post-num">01 / 09</div>
+    <div class="body">
+      <div class="eyebrow">Para CFOs de indústria e comércio</div>
+      <h1>Sua margem em <em>2027</em> não vai ser definida pela alíquota do IBS.</h1>
+      <div class="divider"></div>
+      <p class="sub">Vai ser definida pelo que você reorganizar entre <strong style="color:var(--gold)">agora e 2026</strong>: cadeia, contratos, créditos e formação de preço.</p>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>Tese · Diagnóstico · Captura</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 01</span>
+    <p>A alíquota do IBS é só o número final. O que vai mexer com a sua margem em 2027 é o que você fizer entre agora e 2026: revisão de contratos longos, repactuação de cláusulas tributárias, reorganização de cadeia de fornecimento e ajuste da política de preços diante da migração do ICMS de origem para destino.</p>
+    <p>Quem espera a "reforma se acomodar" está terceirizando a própria margem para a sorte regulatória.</p>
+    <p>Comente "DIAGNÓSTICO" se quiser entender onde sua empresa está mais exposta na transição.</p>
+    <p class="tags">#ReformaTributaria #IBS #CBS #CFO #PlanejamentoTributario #LC214 #Tributario</p>
+  </div>
+
+  <!-- ============================================== POST 2 ============================================== -->
+  <article class="post p2">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>Reforma Tributária</div>
+    <div class="post-num">02 / 09</div>
+    <div class="body">
+      <div class="kicker">Diagnóstico · Sinais de alerta</div>
+      <h1>3 sinais de que sua empresa <em>paga imposto a mais</em> hoje.</h1>
+      <div class="list">
+        <div class="item">
+          <div class="n">01</div>
+          <div>
+            <h3>Créditos de PIS/COFINS subutilizados</h3>
+            <p>Insumos, fretes e despesas operacionais que entram na escrita fiscal sem aproveitamento integral do crédito devido.</p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="n">02</div>
+          <div>
+            <h3>ICMS-ST sem revisão de pauta</h3>
+            <p>Bases de substituição tributária e MVAs que não são reavaliadas há mais de 24 meses, com restituição/ressarcimento perdidos.</p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="n">03</div>
+          <div>
+            <h3>NCM definido por inércia</h3>
+            <p>Classificação fiscal herdada do cadastro original do ERP, sem reanálise sob a ótica do regime regular do IBS/CBS.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>Diagnóstico baseado em SPED + ERP</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 02</span>
+    <p>Empresa de médio porte, ERP estruturado, contador competente — e ainda assim, na quase totalidade dos diagnósticos que rodamos, encontramos uma das três falhas acima.</p>
+    <p>O motivo é simples: contador interno opera o dia a dia. Diagnosticar oportunidade estrutural exige cruzamento de SPED Fiscal, SPED Contribuições, escrita contábil e classificação fiscal — sob a lente do que vai mudar com a Reforma.</p>
+    <p>Não é trabalho que se faz no fechamento mensal. É projeto.</p>
+    <p>Marque um Controller que precisa ler isso.</p>
+    <p class="tags">#PISCOFINS #ICMSST #NCM #ReformaTributaria #SPED #Tributario #Controller #CFO</p>
+  </div>
+
+  <!-- ============================================== POST 3 ============================================== -->
+  <article class="post p3">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>Reforma Tributária</div>
+    <div class="post-num">03 / 09</div>
+    <div class="body">
+      <div class="kicker">Janela de oportunidade</div>
+      <div class="years">
+        <div class="year">
+          <div class="num">2026</div>
+          <div class="verb">testa</div>
+        </div>
+        <div class="year">
+          <div class="num">2027</div>
+          <div class="verb">cobra</div>
+        </div>
+        <div class="year dim">
+          <div class="num">2033</div>
+          <div class="verb">consolida</div>
+        </div>
+      </div>
+      <h1>Quem reorganiza <em>antes</em> da transição, captura. Quem espera, paga.</h1>
+      <p class="sub">A janela útil para revisar contratos longos, repactuar cláusulas tributárias e reposicionar a cadeia de créditos é <strong style="color:var(--cream)">agora</strong> — não em 2027, quando o sistema dual já estiver cobrando.</p>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>Transição IBS/CBS · 2026–2032</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 03</span>
+    <p>O calendário é claro: 2026 é o ano de teste de alíquotas (0,9% CBS / 0,1% IBS), 2027 começa a cobrança efetiva da CBS e a redução do PIS/COFINS, 2033 é o regime pleno.</p>
+    <p>O que muita média empresa não percebeu ainda: o impacto não chega em 2033, chega na <strong>renovação do próximo contrato de fornecimento</strong>, na <strong>próxima formação de preço</strong>, no <strong>próximo ciclo de compras</strong>.</p>
+    <p>Quem entrar em 2027 com contratos antigos, créditos mal mapeados e cadeia desorganizada, vai descobrir o custo da Reforma antes de qualquer concorrente preparado.</p>
+    <p>Salva esse post pra revisitar quando for renegociar contrato.</p>
+    <p class="tags">#ReformaTributaria #IBS #CBS #Transicao #PlanejamentoTributario #LC214 #IndustriaeComercio</p>
+  </div>
+
+  <!-- ============================================== POST 4 ============================================== -->
+  <article class="post p4">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>Modelo Comercial</div>
+    <div class="post-num">04 / 09</div>
+    <div class="body">
+      <div class="eyebrow">Honorário de êxito</div>
+      <h1>Você só paga sobre o que <em>economizar</em>.</h1>
+      <p style="font-family:'Inter',sans-serif;font-weight:300;font-size:21px;line-height:1.5;color:rgba(11,27,43,0.75);max-width:760px;margin-bottom:8px;">
+        Honorário calculado sobre a redução tributária efetivamente comprovada — não sobre horas, não sobre PowerPoint.
+      </p>
+      <div class="split">
+        <div class="col">
+          <div class="label">Risco financeiro · cliente</div>
+          <div class="val">0%</div>
+          <p class="desc">Sem fee fixo, sem fee de mobilização, sem cobrança por diagnóstico inicial em projetos qualificados.</p>
+        </div>
+        <div class="col">
+          <div class="label">Risco financeiro · escritório</div>
+          <div class="val">100%</div>
+          <p class="desc">Investimos tempo, time jurídico, contábil e tecnológico antes de receber o primeiro real.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>Sucumbência alinhada · Incentivos honestos</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 04</span>
+    <p>Modelo de êxito não é desconto disfarçado. É alinhamento de incentivos.</p>
+    <p>Se a tese não se sustenta, não cobramos. Se a economia não se materializa no caixa do cliente, não cobramos. Se o crédito não é homologado, não cobramos.</p>
+    <p>Em troca, pedimos uma coisa: liberdade para diagnosticar a fundo — SPED, ERP, escrita contábil, contratos. Sem isso, não há baseline mensurável e o modelo não funciona para nenhum dos lados.</p>
+    <p>É o oposto da consultoria que cobra fixo alto e raramente assume risco.</p>
+    <p class="tags">#HonorarioDeExito #SuccessFee #Tributario #ReformaTributaria #CFO #ReducaoTributaria</p>
+  </div>
+
+  <!-- ============================================== POST 5 ============================================== -->
+  <article class="post p5">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>Diferencial</div>
+    <div class="post-num">05 / 09</div>
+    <div class="body">
+      <div class="kicker">Como entregamos resultado</div>
+      <div class="pillars">
+        <span>Jurídico.</span>
+        <span>Contábil.</span>
+        <span class="acc">Tecnologia.</span>
+      </div>
+      <div class="divider"></div>
+      <p class="sub">
+        Pareceres robustos com fundamentação à prova de fiscalização. Diagnóstico baseado em <strong>dado real</strong> de SPED e ERP, não estimativa. Simulação de cenários sob a regra nova — IBS, CBS, regime regular vs. específico.
+      </p>
+      <p class="sub" style="margin-top: 24px;">
+        Não é <strong>PowerPoint</strong>. É execução: parametrização, teses, defesa.
+      </p>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>Tese viva · Dado vivo · Implementação</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 05</span>
+    <p>Tese sem dado é achismo. Dado sem tese é planilha. Tese e dado sem ferramenta são projeto que não escala.</p>
+    <p>O que faz uma redução tributária sobreviver a 5 anos de prazo decadencial é a tríade: <strong>jurídico</strong> (parecer assinado, fundamentação, capacidade de defesa), <strong>contábil</strong> (cruzamento de SPED Fiscal × Contribuições × escrita contábil), <strong>tecnologia</strong> (parametrização do ERP, simulação de cenários, monitoramento contínuo).</p>
+    <p>Quem entrega só uma das três, entrega economia que não dura.</p>
+    <p class="tags">#Tributario #ReformaTributaria #Compliance #SPED #Tecnologia #LegalTech #CFO</p>
+  </div>
+
+  <!-- ============================================== POST 6 ============================================== -->
+  <article class="post p6">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>Reforma Tributária</div>
+    <div class="post-num">06 / 09</div>
+    <div class="body">
+      <div class="kicker">Próximo passo</div>
+      <h1>Diagnóstico tributário sob a ótica da <em>Reforma</em>.</h1>
+      <p class="lede">Mapeamos onde sua empresa paga imposto a mais hoje e onde a transição vai apertar amanhã. Você decide se contrata. Honorário só sobre o resultado.</p>
+      <div class="specs">
+        <div class="spec">
+          <div class="label">Setor</div>
+          <div class="val">Indústria <em>·</em> Comércio <em>·</em> Varejo</div>
+        </div>
+        <div class="spec">
+          <div class="label">Porte</div>
+          <div class="val">R$ 4,8M <em>a</em> R$ 300M</div>
+        </div>
+        <div class="spec">
+          <div class="label">Modelo</div>
+          <div class="val">Honorário <em>de êxito</em></div>
+        </div>
+        <div class="spec">
+          <div class="label">Diagnóstico inicial</div>
+          <div class="val">Sem custo <em>·</em> Sem compromisso</div>
+        </div>
+      </div>
+      <a class="cta">Fale com o time <span class="arrow">→</span></a>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>Atendimento nacional</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 06</span>
+    <p>Se sua empresa fatura entre R$ 4,8M e R$ 300M, atua em indústria, comércio ou varejo, e você é CFO, Controller ou sócio responsável pela área financeira — vale uma conversa.</p>
+    <p>O diagnóstico inicial é sem custo e sem compromisso. Em duas reuniões saímos com clareza sobre: (1) onde está a economia tributária imediata, (2) qual o risco da Reforma para a sua margem, (3) se faz sentido ou não seguir num projeto.</p>
+    <p>Se fizer, modelo é de êxito — você só paga sobre o que economizar.</p>
+    <p>DM aberta ou link na bio.</p>
+    <p class="tags">#ReformaTributaria #CFO #Controller #IBS #CBS #ReducaoTributaria #HonorarioDeExito #Tributario</p>
+  </div>
+
+  <!-- ============================================== POST 7 — ANIMADO ============================================== -->
+  <article class="post p7">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>Reforma Tributária</div>
+    <div class="post-num">07 / 09</div>
+    <div class="body">
+      <div class="kicker">Animação · Loop</div>
+      <h1>A Reforma vai mexer com a sua</h1>
+      <div class="rot">
+        <div class="rot-track">
+          <span>margem.</span>
+          <span>cadeia.</span>
+          <span>política de preços.</span>
+          <span>cláusula contratual.</span>
+          <span>classificação fiscal.</span>
+          <span>margem.</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p class="sub">Não é <strong>se</strong> vai mexer. É <strong>onde</strong>, em <strong>quanto</strong> e <strong>quando</strong> sua DRE vai sentir.</p>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>5 frentes · 1 diagnóstico</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 07 (Reel/Story)</span>
+    <p>O efeito da Reforma não é uma coisa só. São cinco — no mínimo:</p>
+    <p>· <strong>Margem</strong>, comprimida pela mudança de não-cumulatividade e por reposicionamentos de cadeia.<br>
+       · <strong>Cadeia de fornecimento</strong>, com fornecedores que ganham ou perdem crédito.<br>
+       · <strong>Política de preços</strong>, com a migração do ICMS de origem para destino.<br>
+       · <strong>Cláusulas contratuais</strong> de fornecimentos longos sem repactuação tributária.<br>
+       · <strong>Classificação fiscal</strong> e cadastro, que rodam por inércia há anos.</p>
+    <p>Cada uma exige resposta diferente. Diagnóstico é o que separa o que pesa do que não pesa <em>na sua</em> operação.</p>
+    <p class="tags">#ReformaTributaria #IBS #CBS #CFO #Controller #PlanejamentoTributario #LC214</p>
+  </div>
+
+  <!-- ============================================== POST 8 — ANIMADO ============================================== -->
+  <article class="post p8">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>Conta Regressiva</div>
+    <div class="post-num">08 / 09</div>
+    <div class="body">
+      <div class="kicker">Animação · Loop · Hoje 30/04/2026</div>
+      <div class="counter"></div>
+      <div class="unit">dias.</div>
+      <div class="divider"></div>
+      <h1>É o tempo que falta até a CBS começar a <em>cobrar de verdade</em>.</h1>
+      <p class="sub">A janela útil para revisar contratos, repactuar cadeia e capturar créditos vence muito antes de 1º/01/2027. Quem deixar para o ano da virada, descobre o impacto direto na DRE.</p>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>1º/01/2027 · CBS plena</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 08 (Reel/Story)</span>
+    <p>246 dias.</p>
+    <p>É o que separa hoje da entrada efetiva da CBS, em 1º de janeiro de 2027 — quando PIS/COFINS começam a ser extintos e a CBS passa a ser cobrada na alíquota cheia.</p>
+    <p>O que não pode esperar 246 dias:</p>
+    <p>· Renegociação de contratos longos sem cláusula de repactuação<br>
+       · Revisão da política de preços com migração do ICMS para destino<br>
+       · Mapeamento de créditos que vão ser perdidos ou ganhos com a transição<br>
+       · Adequação de cadastro fiscal e parametrização do ERP</p>
+    <p>Quem entra em 2027 com isso resolvido, captura. Quem entra sem, paga.</p>
+    <p class="tags">#ReformaTributaria #CBS #IBS #ContaRegressiva #CFO #Tributario #2027</p>
+  </div>
+
+  <!-- ============================================== POST 9 — ANIMADO ============================================== -->
+  <article class="post p9">
+    <div class="frame"></div>
+    <div class="mark"><span class="dot"></span>De onde vem a economia</div>
+    <div class="post-num">09 / 09</div>
+    <div class="body">
+      <div class="kicker">Animação · Loop</div>
+      <h1>Economia tributária <em>não é uma coisa só</em>. São três frentes — em pesos diferentes para cada empresa.</h1>
+      <div class="bars">
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>Créditos não aproveitados</span>
+            <span class="meta">PIS · COFINS · ICMS-ST</span>
+          </div>
+          <div class="bar b1"><div class="fill"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>Cadastro e classificação fiscal</span>
+            <span class="meta">NCM · CST · CFOP</span>
+          </div>
+          <div class="bar b2"><div class="fill"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">
+            <span>Reorganização para IBS/CBS</span>
+            <span class="meta">Cadeia · Contrato · Preço</span>
+          </div>
+          <div class="bar b3"><div class="fill"></div></div>
+        </div>
+      </div>
+      <p class="sub"><strong>Diagnóstico te diz qual peso é o seu.</strong> Em alguns clientes, 70% da economia vem só da primeira frente. Em outros, a virada está na terceira. A média não importa — a sua mistura, sim.</p>
+    </div>
+    <div class="footer">
+      <span class="handle">@escritorio-do-futuro</span>
+      <span>Diagnóstico · SPED · ERP</span>
+    </div>
+  </article>
+
+  <div class="caption">
+    <span class="cap-label">Legenda — Post 09 (Reel/Story)</span>
+    <p>Toda média empresa industrial e comercial tem economia tributária a capturar. O que muda entre uma e outra é <strong>onde está o peso</strong>.</p>
+    <p>Em algumas, a maior parte vem de <strong>créditos não aproveitados</strong> — PIS/COFINS subutilizados, ICMS-ST sem revisão de pauta, IPI mal aproveitado. Em outras, vem de <strong>cadastro fiscal</strong> rodando por inércia — NCMs antigas, CST genérica, CFOP automático. Em outras ainda, o ouro está na <strong>reorganização para IBS/CBS</strong> — contratos, cadeia e preço.</p>
+    <p>Quem promete um número antes de olhar o seu SPED, está chutando.</p>
+    <p>O diagnóstico inicial é sem custo. Em duas reuniões a gente sai com clareza de qual barra é a sua.</p>
+    <p class="tags">#ReformaTributaria #ReducaoTributaria #PISCOFINS #ICMSST #NCM #IBS #CBS #Diagnostico</p>
+  </div>
+
+</div>
+
+</body>
+</html>
