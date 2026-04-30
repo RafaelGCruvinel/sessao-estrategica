@@ -1,0 +1,66 @@
+---
+import Container from './Container.astro';
+import Logo from '~/components/ui/Logo.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-navy-900 text-gray-300 mt-auto pt-16 pb-10 bg-noise">
+  <Container class="relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
+      <div class="md:col-span-5 space-y-5">
+        <Logo variant="light" />
+        <p class="text-sm leading-relaxed max-w-md text-gray-400">
+          Banca tributária nacional. Diagnóstico jurídico, contábil e tecnológico para médias
+          empresas reduzirem carga tributária na transição da Reforma — com modelo de honorário
+          de êxito.
+        </p>
+        <div class="text-xs text-gray-500 leading-relaxed space-y-1">
+          <p>{/* TODO_CLIENT: substituir por dados reais */}</p>
+          <p>Razão Social — CNPJ 00.000.000/0001-00</p>
+          <p>OAB/SP 0000 — Sociedade de Advogados</p>
+          <p>Endereço completo · São Paulo/SP</p>
+        </div>
+      </div>
+
+      <div class="md:col-span-3">
+        <h3 class="text-sm font-semibold text-gray-50 tracking-wide uppercase mb-4">
+          Conteúdo
+        </h3>
+        <ul class="space-y-2.5 text-sm">
+          <li><a href="#metodo" class="hover:text-gray-50 transition-colors">Método</a></li>
+          <li><a href="#diferencial" class="hover:text-gray-50 transition-colors">Diferencial</a></li>
+          <li><a href="#exito" class="hover:text-gray-50 transition-colors">Modelo de Êxito</a></li>
+          <li><a href="#faq" class="hover:text-gray-50 transition-colors">FAQ</a></li>
+          <li><a href="#sessao-estrategica" class="hover:text-gray-50 transition-colors">Agendar Sessão</a></li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-4">
+        <h3 class="text-sm font-semibold text-gray-50 tracking-wide uppercase mb-4">
+          Contato &amp; Legal
+        </h3>
+        <ul class="space-y-2.5 text-sm">
+          <li>
+            <a href="https://wa.me/5519940028922" class="hover:text-gray-50 transition-colors" target="_blank" rel="noopener noreferrer">
+              WhatsApp · (19) 94002-8922
+            </a>
+          </li>
+          <li>
+            <a href="/politica-privacidade" class="hover:text-gray-50 transition-colors">
+              Política de Privacidade (LGPD)
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 pt-8 border-t border-navy-700/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-gray-500">
+      <p>© {currentYear} Sessão Estratégica. Todos os direitos reservados.</p>
+      <p class="max-w-2xl text-right md:text-right text-pretty">
+        Em conformidade com o Provimento OAB nº 205/2021. O conteúdo deste site tem caráter
+        meramente informativo e não constitui captação indevida de clientela.
+      </p>
+    </div>
+  </Container>
+</footer>

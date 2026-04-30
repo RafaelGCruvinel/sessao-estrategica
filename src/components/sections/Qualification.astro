@@ -1,0 +1,26 @@
+---
+import Container from '~/components/layout/Container.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+import QualificationQuiz from '~/components/quiz/QualificationQuiz.tsx';
+---
+
+<section id="sessao-estrategica" class="bg-gray-100 py-20 md:py-28 border-t border-gray-200 scroll-mt-20">
+  <Container>
+    <SectionHeading
+      eyebrow="Agendar"
+      title="Sessão Estratégica · 45 minutos · sem custo"
+      subtitle="Antes da reunião, queremos entender o seu contexto para que ela seja realmente útil. Seis perguntas curtas — depois você abre o WhatsApp para escolher horário."
+      align="center"
+      class="mx-auto"
+    />
+
+    <div class="mt-12 max-w-3xl mx-auto">
+      <QualificationQuiz client:visible />
+    </div>
+
+    <p class="mt-8 text-center text-sm text-gray-500 max-w-md mx-auto">
+      Suas respostas são processadas no seu navegador. Nada é armazenado em servidor — o
+      contexto só é enviado quando você confirma a abertura do WhatsApp.
+    </p>
+  </Container>
+</section>

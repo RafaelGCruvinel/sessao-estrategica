@@ -1,0 +1,27 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import Button from '~/components/ui/Button.astro';
+---
+
+<BaseLayout title="Página não encontrada — Sessão Estratégica" noindex={true}>
+  <section class="bg-gray-100 py-24 md:py-32 min-h-[60vh] flex items-center">
+    <Container class="text-center">
+      <p class="font-display text-7xl md:text-8xl text-copper-500 font-light tracking-tight">404</p>
+      <h1 class="mt-4 font-display text-3xl md:text-4xl text-navy-900 leading-tight">
+        Esta página não existe (ou ainda não)
+      </h1>
+      <p class="mt-4 text-base text-gray-700 max-w-md mx-auto">
+        Pode ser um link antigo. Volte para a página inicial e siga direto para a Sessão.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <Button href="/" variant="primary" size="md">
+          Página inicial
+        </Button>
+        <Button href="/#sessao-estrategica" variant="ghost" size="md">
+          Agendar Sessão
+        </Button>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

@@ -1,0 +1,94 @@
+---
+import Container from '~/components/layout/Container.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+
+const steps = [
+  {
+    number: '01',
+    title: 'Diagnóstico',
+    duration: '~2 semanas',
+    body:
+      'Varremos seu SPED Fiscal, Contribuições, EFD-ICMS/IPI cruzados com a escrita contábil. Mapeamos crédito não aproveitado, NCM duvidosa, regime aplicável e exposição à Reforma.',
+  },
+  {
+    number: '02',
+    title: 'Plano de Captura',
+    duration: 'Entrega formal',
+    body:
+      'Relatório com cada oportunidade quantificada em R$, prazo de implementação, risco jurídico classificado e parecer de respaldo assinado pelo tributarista responsável.',
+  },
+  {
+    number: '03',
+    title: 'Implementação',
+    duration: 'Time integrado',
+    body:
+      'Reparametrização no ERP, peticionamento quando necessário, pareceres assinados. Trabalho feito com o seu controller, não jogado no colo dele.',
+  },
+  {
+    number: '04',
+    title: 'Êxito comprovado',
+    duration: 'Honorário só sobre captura',
+    body:
+      'Após implementação, mensuramos a economia em relatório fiscal documentado. Você só paga honorário sobre o que efetivamente entrou no caixa ou deixou de sair.',
+  },
+];
+---
+
+<section id="metodo" class="relative bg-navy-900 text-gray-50 py-24 md:py-32 bg-noise overflow-hidden">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full opacity-15 blur-[180px]"
+    style="background: radial-gradient(ellipse, var(--color-copper-500) 0%, transparent 70%);"
+  ></div>
+
+  <Container class="relative z-10">
+    <SectionHeading
+      eyebrow="Método"
+      title="Como funciona uma Sessão Estratégica"
+      subtitle="Não é consultoria genérica. É um protocolo de diagnóstico baseado em dado real do seu SPED e ERP. Cada etapa é assinada por advogado tributarista (OAB) e contador responsável (CRC)."
+      variant="dark"
+      align="center"
+      class="mx-auto"
+    />
+
+    <ol class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-navy-700/40 rounded-2xl overflow-hidden border border-navy-700/50">
+      {steps.map((step, i) => (
+        <li
+          class="reveal relative bg-navy-800/60 backdrop-blur-sm p-7 lg:p-8 hover:bg-navy-800/90 transition-colors"
+          style={`transition-delay: ${i * 100}ms`}
+        >
+          <div class="flex items-baseline justify-between mb-6">
+            <span class="font-display text-4xl font-light text-copper-400 tracking-tight">
+              {step.number}
+            </span>
+            <span class="text-xs font-medium tracking-wide uppercase text-gray-500">
+              {step.duration}
+            </span>
+          </div>
+          <h3 class="text-xl font-display font-medium text-gray-50 mb-3">
+            {step.title}
+          </h3>
+          <p class="text-sm leading-relaxed text-gray-300 text-pretty">
+            {step.body}
+          </p>
+
+          {i < steps.length - 1 && (
+            <span
+              aria-hidden="true"
+              class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-6 h-6 rounded-full bg-copper-500 border-4 border-navy-900 items-center justify-center"
+            >
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" class="absolute inset-0 m-auto text-navy-900">
+                <path d="M2 5H8M8 5L5 2M8 5L5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          )}
+        </li>
+      ))}
+    </ol>
+
+    <p class="mt-12 text-center text-sm text-gray-400 max-w-2xl mx-auto text-pretty">
+      Toda Sessão começa com um diagnóstico estruturado — e só avança se houver oportunidade
+      mensurável. Sem relatório bonito sem substância. Sem horas faturadas sem entrega.
+    </p>
+  </Container>
+</section>

@@ -1,0 +1,39 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  variant?: 'light' | 'dark';
+  level?: 'h2' | 'h3';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  align = 'left',
+  variant = 'light',
+  level: Tag = 'h2',
+  class: className = '',
+} = Astro.props;
+
+const titleColor = variant === 'dark' ? 'text-gray-50' : 'text-navy-900';
+const subtitleColor = variant === 'dark' ? 'text-gray-300' : 'text-gray-700';
+const eyebrowClass = variant === 'dark' ? 'eyebrow eyebrow-dark' : 'eyebrow';
+const alignClass = align === 'center' ? 'text-center mx-auto' : 'text-left';
+const titleSize = Tag === 'h2' ? 'text-3xl md:text-4xl lg:text-[2.75rem]' : 'text-2xl md:text-3xl';
+---
+
+<header class:list={[alignClass, className, 'max-w-3xl']}>
+  {eyebrow && <p class={eyebrowClass}>{eyebrow}</p>}
+  <Tag class:list={[titleSize, 'mt-3 leading-[1.15] text-balance', titleColor]}>
+    {title}
+  </Tag>
+  {subtitle && (
+    <p class:list={['mt-5 text-lg leading-relaxed text-pretty', subtitleColor]}>
+      {subtitle}
+    </p>
+  )}
+</header>

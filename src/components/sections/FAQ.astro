@@ -1,0 +1,30 @@
+---
+import Container from '~/components/layout/Container.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+import Accordion from '~/components/ui/Accordion.astro';
+import { faqItems } from '~/content/faq';
+---
+
+<section id="faq" class="bg-gray-50 py-20 md:py-28 border-t border-gray-200">
+  <Container>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+      <div class="lg:col-span-4">
+        <SectionHeading
+          eyebrow="Perguntas frequentes"
+          title="Dúvidas que CFOs e Controllers costumam trazer"
+          subtitle="Se ficou alguma dúvida fora dessa lista, traga na própria Sessão Estratégica."
+        />
+      </div>
+
+      <div class="lg:col-span-8">
+        <div class="bg-gray-100 border border-gray-200 rounded-xl px-6 md:px-8">
+          {faqItems.map((item, i) => (
+            <Accordion question={item.question} open={i === 0}>
+              <p>{item.answer}</p>
+            </Accordion>
+          ))}
+        </div>
+      </div>
+    </div>
+  </Container>
+</section>

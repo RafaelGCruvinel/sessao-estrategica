@@ -1,0 +1,59 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import Button from '~/components/ui/Button.astro';
+import { getWhatsAppNumber } from '~/lib/whatsapp';
+
+const number = getWhatsAppNumber();
+const formatted = `+${number.slice(0, 2)} (${number.slice(2, 4)}) ${number.slice(4, 9)}-${number.slice(9)}`;
+const directLink = `https://wa.me/${number}`;
+---
+
+<BaseLayout
+  title="Obrigado — Sessão Estratégica"
+  description="Continue para o WhatsApp do escritório"
+  noindex={true}
+>
+  <section class="bg-gray-100 py-20 md:py-32 min-h-[60vh]">
+    <Container>
+      <div class="max-w-2xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-8 md:p-12 shadow-[var(--shadow-card)] text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-success/10 text-success mb-5 mx-auto">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12L10 17L20 7" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h1 class="font-display text-3xl md:text-4xl text-navy-900 leading-tight text-balance">
+          Solicitação registrada
+        </h1>
+        <p class="mt-5 text-base md:text-lg text-gray-700 leading-relaxed text-pretty">
+          Caso o WhatsApp não tenha aberto automaticamente, use o link abaixo. O nosso time
+          responde em até 1 dia útil.
+        </p>
+
+        <div class="mt-8 p-6 bg-navy-900 text-gray-50 rounded-xl">
+          <p class="text-xs uppercase tracking-widest text-copper-400 font-semibold">
+            WhatsApp do escritório
+          </p>
+          <p class="mt-2 font-display text-2xl text-gray-50">{formatted}</p>
+          <a
+            href={directLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-5 inline-flex items-center justify-center gap-2 px-6 py-3 bg-copper-500 hover:bg-copper-400 text-navy-900 font-medium rounded-md transition-colors"
+          >
+            Abrir conversa no WhatsApp
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="mt-8">
+          <Button href="/" variant="ghost" size="md">
+            Voltar ao início
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

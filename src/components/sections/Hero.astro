@@ -1,0 +1,90 @@
+---
+import Container from '~/components/layout/Container.astro';
+import Button from '~/components/ui/Button.astro';
+---
+
+<section class="relative bg-navy-900 bg-noise overflow-hidden">
+  <!-- Glow âmbar sutil no canto -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-32 -right-32 w-[640px] h-[640px] rounded-full opacity-20 blur-[120px]"
+    style="background: radial-gradient(circle, var(--color-copper-500) 0%, transparent 70%);"
+  ></div>
+  <!-- Glow navy contra-ponto -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -bottom-40 -left-40 w-[700px] h-[700px] rounded-full opacity-30 blur-[140px]"
+    style="background: radial-gradient(circle, var(--color-navy-500) 0%, transparent 70%);"
+  ></div>
+
+  <Container class="relative z-10 pt-20 md:pt-28 pb-24 md:pb-32">
+    <div class="max-w-4xl">
+      <p class="eyebrow eyebrow-dark inline-flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-copper-400"></span>
+        Reforma Tributária · IBS · CBS
+      </p>
+
+      <h1 class="mt-6 font-display text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.25rem] leading-[1.05] tracking-[-0.025em] text-gray-50 text-balance">
+        Sua margem em <span class="italic text-copper-400">2027</span> não vai ser definida pela alíquota.
+        <span class="block mt-2 text-gray-300 font-light">
+          Vai ser definida pelo que você reorganizar até 2026.
+        </span>
+      </h1>
+
+      <p class="mt-8 max-w-2xl text-lg md:text-xl leading-relaxed text-gray-300 text-pretty">
+        Diagnosticamos onde sua empresa paga imposto a mais <strong class="text-gray-50 font-medium">hoje</strong>
+        e onde a Reforma vai apertar <strong class="text-gray-50 font-medium">amanhã</strong>.
+        Você só paga sobre a economia comprovada.
+      </p>
+
+      <div class="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
+        <Button href="#sessao-estrategica" variant="primary" size="lg">
+          Agendar Sessão Estratégica
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </Button>
+        <Button href="#metodo" variant="ghost-dark" size="lg">
+          Ver método
+        </Button>
+      </div>
+
+      <ul class="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 max-w-3xl">
+        <li class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0 text-copper-400" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 2L12.39 6.95L17.5 7.69L13.75 11.41L14.78 16.5L10 14.05L5.22 16.5L6.25 11.41L2.5 7.69L7.61 6.95L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <p class="text-sm font-semibold text-gray-50">Atuação nacional</p>
+            <p class="text-xs text-gray-400 mt-0.5">Empresas em todo o Brasil</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0 text-copper-400" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M10 1.67L12.575 6.83L18.333 7.66L14.166 11.66L15.15 17.33L10 14.66L4.85 17.33L5.833 11.66L1.667 7.66L7.425 6.83L10 1.67Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="currentColor" fill-opacity="0.15"/>
+          </svg>
+          <div>
+            <p class="text-sm font-semibold text-gray-50">Modelo de êxito</p>
+            <p class="text-xs text-gray-400 mt-0.5">Você só paga se houver economia</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <svg class="mt-0.5 shrink-0 text-copper-400" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M2.5 5.83L10 1.67L17.5 5.83V14.17L10 18.33L2.5 14.17V5.83Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M6 9.5L9 12.5L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <p class="text-sm font-semibold text-gray-50">Jurídico + Contábil + Tech</p>
+            <p class="text-xs text-gray-400 mt-0.5">Time integrado, parecer assinado</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </Container>
+
+  <!-- Fade inferior para transição suave -->
+  <div
+    aria-hidden="true"
+    class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-gray-100"
+  ></div>
+</section>

@@ -1,0 +1,70 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import Button from '~/components/ui/Button.astro';
+
+const motivo = (Astro.url.searchParams.get('motivo') ?? 'porte') as 'porte' | 'dado' | 'preco';
+
+const variants = {
+  porte: {
+    eyebrow: 'Porte fora do nosso foco',
+    title: 'Hoje a Sessão Estratégica não é o melhor encaixe para a sua empresa',
+    body:
+      'Nosso modelo é desenhado para médias empresas (faturamento acima de R$ 4,8 milhões), onde a complexidade tributária justifica o protocolo de diagnóstico que aplicamos. Para empresas em estágio inicial, recomendamos consolidar a estrutura fiscal antes de explorar reduções estruturais.',
+    cta: 'Quando o porte mudar, a porta segue aberta. Pode nos guardar como referência para o futuro.',
+    actionLabel: 'Voltar para a página inicial',
+    actionHref: '/',
+  },
+  dado: {
+    eyebrow: 'Antes do êxito, organização',
+    title: 'O modelo de êxito requer baseline fiscal mensurável — e podemos te ajudar com isso',
+    body:
+      'Para garantir economia comprovada, partimos de dado fiscal estruturado (SPED limpo, ERP organizado). Empresas em saneamento contábil costumam entrar pelo "Projeto Zero" — uma frente paga e enxuta de organização fiscal que prepara o terreno para a Sessão Estratégica formal. Sem essa etapa, o trabalho vira saneamento contábil disfarçado de tributário.',
+    cta: 'Conte um pouco do seu cenário por e-mail e desenhamos um Projeto Zero proporcional.',
+    actionLabel: 'Falar sobre Projeto Zero',
+    actionHref: 'mailto:contato@sessaoestrategica.com.br?subject=Projeto%20Zero%20-%20Saneamento%20Fiscal',
+  },
+  preco: {
+    eyebrow: 'Conversa sobre valor, não preço',
+    title: 'Trabalhamos com modelo de êxito justamente para alinhar incentivos',
+    body:
+      'Não temos tabela de preço — nosso honorário é um percentual da economia que mensuramos juntos. Se a conversa que faz sentido é sobre risco compartilhado e resultado mensurável (em vez de tabela e desconto), reabra a Sessão a qualquer momento. Caso contrário, agradecemos a visita.',
+    cta: 'Quando você quiser falar sobre resultado em vez de preço, é só voltar.',
+    actionLabel: 'Voltar para a página inicial',
+    actionHref: '/',
+  },
+};
+
+const variant = variants[motivo] ?? variants.porte;
+
+const title = `${variant.title} — Sessão Estratégica`;
+---
+
+<BaseLayout title={title} description={variant.body} noindex={true}>
+  <section class="bg-gray-100 py-20 md:py-32 min-h-[60vh]">
+    <Container>
+      <div class="max-w-2xl mx-auto bg-gray-50 border border-gray-200 rounded-2xl p-8 md:p-12 shadow-[var(--shadow-card)]">
+        <p class="eyebrow">{variant.eyebrow}</p>
+        <h1 class="mt-4 font-display text-3xl md:text-4xl text-navy-900 leading-[1.15] text-balance">
+          {variant.title}
+        </h1>
+        <p class="mt-6 text-base md:text-lg text-gray-700 leading-relaxed text-pretty">
+          {variant.body}
+        </p>
+
+        <div class="mt-8 p-5 bg-copper-500/8 border border-copper-500/20 rounded-lg">
+          <p class="text-sm text-navy-900 leading-relaxed">{variant.cta}</p>
+        </div>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <Button href={variant.actionHref} variant="primary" size="md">
+            {variant.actionLabel}
+          </Button>
+          <Button href="/" variant="ghost" size="md">
+            Voltar ao início
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

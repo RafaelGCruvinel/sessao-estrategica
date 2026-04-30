@@ -1,0 +1,32 @@
+---
+import Container from '~/components/layout/Container.astro';
+import Button from '~/components/ui/Button.astro';
+---
+
+<section class="relative bg-navy-900 text-gray-50 py-20 md:py-24 bg-noise overflow-hidden">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 opacity-50"
+    style="background: radial-gradient(ellipse at center, var(--color-copper-500) 0%, transparent 60%); opacity: 0.08;"
+  ></div>
+
+  <Container class="relative z-10 text-center">
+    <p class="eyebrow eyebrow-dark">Janela aberta · 18 meses</p>
+    <h2 class="mt-5 font-display text-3xl md:text-5xl leading-[1.1] text-balance max-w-3xl mx-auto">
+      Quem reorganiza captura. <br class="hidden sm:inline" />
+      <span class="text-copper-400 italic font-light">Quem espera, paga.</span>
+    </h2>
+    <p class="mt-6 text-lg text-gray-300 max-w-xl mx-auto text-pretty">
+      A Sessão Estratégica é gratuita e dura 45 minutos. Você sai com clareza sobre o
+      potencial de captura na sua operação — e sem compromisso.
+    </p>
+    <div class="mt-10">
+      <Button href="#sessao-estrategica" variant="primary" size="lg">
+        Quero agendar a minha Sessão
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </Button>
+    </div>
+  </Container>
+</section>

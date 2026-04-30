@@ -1,0 +1,25 @@
+---
+interface Props {
+  variant?: 'navy' | 'copper' | 'outline-light' | 'outline-dark';
+  class?: string;
+}
+
+const { variant = 'copper', class: className = '' } = Astro.props;
+
+const variantClasses = {
+  navy: 'bg-navy-700/8 text-navy-700',
+  copper: 'bg-copper-500/12 text-copper-700',
+  'outline-light': 'border border-gray-50/25 text-gray-50/90',
+  'outline-dark': 'border border-navy-700/20 text-navy-700',
+};
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium tracking-wide',
+    variantClasses[variant],
+    className,
+  ]}
+>
+  <slot />
+</span>

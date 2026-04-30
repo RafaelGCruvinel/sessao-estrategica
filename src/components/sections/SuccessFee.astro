@@ -1,0 +1,75 @@
+---
+import Container from '~/components/layout/Container.astro';
+import SectionHeading from '~/components/ui/SectionHeading.astro';
+
+const blocks = [
+  {
+    headline: 'Sem fee fixo de entrada',
+    body:
+      'O diagnóstico inicial é parte do nosso compromisso. Casos com SPED não estruturado podem demandar projeto-zero pago — discutido caso a caso com transparência.',
+  },
+  {
+    headline: 'Honorário em % sobre R$ economizados',
+    body:
+      'Pago apenas sobre economia mensurada e documentada em relatório fiscal pós-implementação. Cada centavo é rastreável, auditável e acordado em contrato.',
+  },
+  {
+    headline: 'Governança fiscal mínima necessária',
+    body:
+      'Modelo funciona quando há baseline confiável (ERP estruturado, escrita fiscal limpa). Empresas em saneamento contábil entram pelo projeto-zero antes do êxito.',
+  },
+];
+---
+
+<section id="exito" class="relative bg-gray-50 py-20 md:py-28 overflow-hidden">
+  <!-- Faixa decorativa lateral -->
+  <div
+    aria-hidden="true"
+    class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-copper-500/[0.03] to-transparent pointer-events-none"
+  ></div>
+
+  <Container class="relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-5">
+        <SectionHeading
+          eyebrow="Modelo de êxito"
+          title="Você só paga se houver economia comprovada."
+          subtitle="O modelo de honorário é o que alinha incentivos. Quando o seu resultado é o nosso resultado, a conversa muda."
+        />
+
+        <div class="mt-8 inline-flex items-center gap-3 bg-copper-500/10 border border-copper-500/20 px-4 py-3 rounded-lg">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="text-copper-600 shrink-0" aria-hidden="true">
+            <path d="M10 2L12.39 6.95L17.5 7.69L13.75 11.41L14.78 16.5L10 14.05L5.22 16.5L6.25 11.41L2.5 7.69L7.61 6.95L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="currentColor" fill-opacity="0.2"/>
+          </svg>
+          <p class="text-sm text-navy-900 font-medium">
+            Risco financeiro fora da sua mesa.
+          </p>
+        </div>
+      </div>
+
+      <ul class="lg:col-span-7 space-y-5">
+        {blocks.map((block, i) => (
+          <li
+            class="reveal flex gap-5 items-start bg-white border border-gray-200 rounded-xl p-6 lg:p-7 hover:border-copper-500/30 hover:shadow-[var(--shadow-card-hover)] transition-all duration-300"
+            style={`transition-delay: ${i * 80}ms`}
+          >
+            <span
+              class="shrink-0 mt-1 inline-flex h-9 w-9 items-center justify-center rounded-full bg-navy-700 text-copper-400 font-mono text-sm font-semibold tabular-nums"
+              aria-hidden="true"
+            >
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div>
+              <p class="font-display text-lg text-navy-900 font-medium leading-snug">
+                {block.headline}
+              </p>
+              <p class="mt-2 text-sm text-gray-700 leading-relaxed text-pretty">
+                {block.body}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Container>
+</section>

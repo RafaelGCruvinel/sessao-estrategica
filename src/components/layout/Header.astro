@@ -1,0 +1,43 @@
+---
+import Container from './Container.astro';
+import Logo from '~/components/ui/Logo.astro';
+import Button from '~/components/ui/Button.astro';
+
+const navLinks = [
+  { href: '#metodo', label: 'Método' },
+  { href: '#diferencial', label: 'Diferencial' },
+  { href: '#exito', label: 'Êxito' },
+  { href: '#faq', label: 'FAQ' },
+];
+---
+
+<header
+  data-site-header
+  class="sticky top-0 z-40 transition-all duration-300 bg-navy-900/85 backdrop-blur-md border-b border-transparent data-[scrolled=true]:border-navy-700/50 data-[scrolled=true]:shadow-[0_4px_20px_-4px_rgb(11_18_32/0.4)]"
+>
+  <Container class="flex items-center justify-between h-16 md:h-[72px]">
+    <Logo variant="light" />
+
+    <nav class="hidden md:flex items-center gap-8" aria-label="Navegação principal">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="text-sm font-medium text-gray-300 hover:text-gray-50 transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <Button href="#sessao-estrategica" variant="primary" size="md" class="hidden sm:inline-flex">
+      Agendar Sessão
+    </Button>
+
+    <a
+      href="#sessao-estrategica"
+      class="sm:hidden text-sm font-medium text-copper-400 hover:text-copper-300 transition-colors"
+    >
+      Agendar →
+    </a>
+  </Container>
+</header>

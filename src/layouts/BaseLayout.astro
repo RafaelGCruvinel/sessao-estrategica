@@ -1,0 +1,144 @@
+---
+import '~/styles/global.css';
+import Header from '~/components/layout/Header.astro';
+import Footer from '~/components/layout/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  noindex?: boolean;
+  ogImage?: string;
+}
+
+const SITE_URL = import.meta.env.PUBLIC_SITE_URL ?? 'https://sessaoestrategica.com.br';
+const DEFAULT_TITLE = 'Sessão Estratégica — Redução tributária na Reforma (IBS/CBS) | Honorário de êxito';
+const DEFAULT_DESCRIPTION =
+  'Diagnóstico jurídico, contábil e tecnológico para médias empresas reduzirem carga tributária na transição da Reforma. Você só paga sobre a economia comprovada.';
+
+const {
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  canonical,
+  noindex = false,
+  ogImage = '/og-image.svg',
+} = Astro.props;
+
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE_URL).toString();
+const ogImageUrl = new URL(ogImage, SITE_URL).toString();
+
+const legalServiceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: 'Sessão Estratégica',
+  description: DEFAULT_DESCRIPTION,
+  url: SITE_URL,
+  areaServed: {
+    '@type': 'Country',
+    name: 'Brasil',
+  },
+  serviceType: 'Consultoria tributária — Reforma IBS/CBS',
+  priceRange: 'Honorário de êxito sobre economia comprovada',
+  provider: {
+    '@type': 'LegalService',
+    name: 'Sessão Estratégica',
+    telephone: '+55 19 94002-8922',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'BR',
+    },
+  },
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0B1220" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Sessão Estratégica" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(legalServiceJsonLd)} />
+  </head>
+  <body class="min-h-screen flex flex-col antialiased">
+    <a
+      href="#conteudo-principal"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-navy-900 focus:text-gray-50 focus:px-4 focus:py-2 focus:rounded-md"
+    >
+      Pular para o conteúdo
+    </a>
+
+    <Header />
+
+    <main id="conteudo-principal" class="flex-1">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      // Reveal-on-scroll com Intersection Observer
+      if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-visible');
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
+          );
+
+          document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+        } else {
+          document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
+        }
+      }
+
+      // Header com sombra ao rolar
+      const header = document.querySelector('[data-site-header]');
+      if (header) {
+        const onScroll = () => {
+          if (window.scrollY > 8) {
+            header.setAttribute('data-scrolled', 'true');
+          } else {
+            header.removeAttribute('data-scrolled');
+          }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+    </script>
+  </body>
+</html>

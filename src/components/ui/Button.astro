@@ -1,0 +1,65 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'ghost' | 'ghost-dark' | 'secondary';
+  size?: 'md' | 'lg';
+  type?: 'button' | 'submit';
+  class?: string;
+  target?: string;
+  rel?: string;
+  id?: string;
+  ariaLabel?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className = '',
+  target,
+  rel,
+  id,
+  ariaLabel,
+} = Astro.props;
+
+const sizeClasses = {
+  md: 'px-5 py-3 text-sm',
+  lg: 'px-7 py-4 text-base',
+};
+
+const variantClasses = {
+  primary:
+    'bg-copper-500 text-navy-900 hover:bg-copper-400 active:bg-copper-600 shadow-[0_2px_0_rgb(0_0_0/0.08)]',
+  secondary:
+    'bg-navy-700 text-gray-50 hover:bg-navy-600 active:bg-navy-800',
+  ghost:
+    'bg-transparent text-navy-700 border border-navy-700/30 hover:border-navy-700 hover:bg-navy-700/5',
+  'ghost-dark':
+    'bg-transparent text-gray-50 border border-gray-50/30 hover:border-gray-50/70 hover:bg-gray-50/5',
+};
+
+const baseClass = `
+  inline-flex items-center justify-center gap-2
+  font-medium tracking-tight
+  rounded-md
+  transition-all duration-200 ease-out
+  whitespace-nowrap
+  focus-visible:outline-2 focus-visible:outline-copper-400 focus-visible:outline-offset-2
+  disabled:opacity-50 disabled:cursor-not-allowed
+`;
+
+const Tag = href ? 'a' : 'button';
+const props = href
+  ? { href, target, rel: target === '_blank' ? rel ?? 'noopener noreferrer' : rel }
+  : { type };
+---
+
+<Tag
+  class:list={[baseClass, sizeClasses[size], variantClasses[variant], className]}
+  {...props}
+  id={id}
+  aria-label={ariaLabel}
+>
+  <slot />
+</Tag>

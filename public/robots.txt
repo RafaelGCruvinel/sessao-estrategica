@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /nao-elegivel
+Disallow: /obrigado
+
+Sitemap: https://sessaoestrategica.com.br/sitemap-index.xml

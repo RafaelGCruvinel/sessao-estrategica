@@ -1,0 +1,24 @@
+---
+interface Props {
+  variant?: 'light' | 'dark';
+  class?: string;
+}
+
+const { variant = 'dark', class: className = '' } = Astro.props;
+
+const textColor = variant === 'light' ? 'text-gray-50' : 'text-navy-900';
+const accentColor = variant === 'light' ? 'text-copper-400' : 'text-copper-500';
+---
+
+<a
+  href="/"
+  class:list={['inline-flex items-baseline gap-2 group', className]}
+  aria-label="Sessão Estratégica — página inicial"
+>
+  <span class:list={['font-display text-xl font-semibold tracking-tight leading-none', textColor]}>
+    Sessão
+  </span>
+  <span class:list={['font-display text-xl font-light italic leading-none', accentColor]}>
+    Estratégica
+  </span>
+</a>
