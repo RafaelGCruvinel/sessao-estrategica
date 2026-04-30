@@ -1,90 +1,241 @@
 ---
 import Container from '~/components/layout/Container.astro';
 import Button from '~/components/ui/Button.astro';
+
+const timelineSteps = [
+  {
+    year: '2026',
+    label: 'Teste de alíquotas',
+    description: 'Janela de planejamento aberta',
+    active: true,
+  },
+  {
+    year: '2027',
+    label: 'Início da transição',
+    description: 'CBS entra; ICMS começa a migrar',
+  },
+  {
+    year: '2032',
+    label: 'Cobrança plena',
+    description: 'IBS/CBS atingem alíquota integral',
+  },
+  {
+    year: '2033',
+    label: 'Regime único',
+    description: 'Fim de ICMS, PIS e COFINS',
+  },
+];
 ---
 
-<section class="relative bg-navy-900 bg-noise overflow-hidden">
-  <!-- Glow âmbar sutil no canto -->
+<section class="relative bg-navy-900 bg-noise overflow-hidden isolate">
+  <!-- Background mesh animado (3 camadas) -->
+  <div aria-hidden="true" class="absolute inset-0 pointer-events-none">
+    <div
+      class="absolute -top-40 -right-40 w-[720px] h-[720px] rounded-full opacity-25 blur-[140px] anim-mesh-1"
+      style="background: radial-gradient(circle, var(--color-copper-500) 0%, transparent 65%);"
+    ></div>
+    <div
+      class="absolute top-1/3 -left-40 w-[680px] h-[680px] rounded-full opacity-30 blur-[150px] anim-mesh-2"
+      style="background: radial-gradient(circle, var(--color-navy-500) 0%, transparent 70%);"
+    ></div>
+    <div
+      class="absolute -bottom-32 right-1/4 w-[540px] h-[540px] rounded-full opacity-15 blur-[120px] anim-mesh-1"
+      style="background: radial-gradient(circle, #4F6798 0%, transparent 70%); animation-delay: -8s;"
+    ></div>
+  </div>
+
+  <!-- Grid sutil de linhas verticais (apenas decorativo, lg+) -->
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute -top-32 -right-32 w-[640px] h-[640px] rounded-full opacity-20 blur-[120px]"
-    style="background: radial-gradient(circle, var(--color-copper-500) 0%, transparent 70%);"
-  ></div>
-  <!-- Glow navy contra-ponto -->
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute -bottom-40 -left-40 w-[700px] h-[700px] rounded-full opacity-30 blur-[140px]"
-    style="background: radial-gradient(circle, var(--color-navy-500) 0%, transparent 70%);"
-  ></div>
+    class="hidden lg:block absolute inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[1280px] pointer-events-none opacity-[0.06]"
+  >
+    <div class="absolute inset-y-0 left-[8.333%] w-px bg-gradient-to-b from-transparent via-gray-50 to-transparent"></div>
+    <div class="absolute inset-y-0 left-[33.333%] w-px bg-gradient-to-b from-transparent via-gray-50 to-transparent"></div>
+    <div class="absolute inset-y-0 left-[58.333%] w-px bg-gradient-to-b from-transparent via-gray-50 to-transparent"></div>
+    <div class="absolute inset-y-0 left-[83.333%] w-px bg-gradient-to-b from-transparent via-gray-50 to-transparent"></div>
+  </div>
 
-  <Container class="relative z-10 pt-20 md:pt-28 pb-24 md:pb-32">
-    <div class="max-w-4xl">
-      <p class="eyebrow eyebrow-dark inline-flex items-center gap-2">
-        <span class="w-1.5 h-1.5 rounded-full bg-copper-400"></span>
-        Reforma Tributária · IBS · CBS
-      </p>
+  <Container class="relative z-10 pt-20 md:pt-28 lg:pt-32 pb-28 md:pb-32 lg:pb-40">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <!-- Coluna esquerda: tipografia + CTA -->
+      <div class="lg:col-span-7 xl:col-span-7">
+        <p
+          class="anim-rise eyebrow eyebrow-dark inline-flex items-center gap-2"
+          style="animation-delay: 100ms"
+        >
+          <span class="relative flex h-1.5 w-1.5">
+            <span class="absolute inline-flex h-full w-full rounded-full bg-copper-400 opacity-60 anim-pulse-active"></span>
+            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-copper-400"></span>
+          </span>
+          Reforma Tributária · IBS · CBS
+        </p>
 
-      <h1 class="mt-6 font-display text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.25rem] leading-[1.05] tracking-[-0.025em] text-gray-50 text-balance">
-        Sua margem em <span class="italic text-copper-400">2027</span> não vai ser definida pela alíquota.
-        <span class="block mt-2 text-gray-300 font-light">
-          Vai ser definida pelo que você reorganizar até 2026.
-        </span>
-      </h1>
+        <h1 class="anim-rise mt-6 font-display text-[2.25rem] sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[4.75rem] leading-[1.04] tracking-[-0.028em] text-gray-50 text-balance" style="animation-delay: 250ms">
+          Sua margem em
+          <span class="relative inline-block whitespace-nowrap">
+            <span class="anim-shimmer italic font-medium">2027</span>
+            <span
+              aria-hidden="true"
+              class="anim-underline absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-copper-500 via-copper-300 to-copper-500"
+            ></span>
+          </span>
+          <br class="hidden sm:block" />
+          não vai ser definida pela alíquota.
+          <span class="block mt-3 text-gray-300 font-light">
+            Vai ser definida pelo que você reorganizar até 2026.
+          </span>
+        </h1>
 
-      <p class="mt-8 max-w-2xl text-lg md:text-xl leading-relaxed text-gray-300 text-pretty">
-        Diagnosticamos onde sua empresa paga imposto a mais <strong class="text-gray-50 font-medium">hoje</strong>
-        e onde a Reforma vai apertar <strong class="text-gray-50 font-medium">amanhã</strong>.
-        Você só paga sobre a economia comprovada.
-      </p>
+        <p
+          class="anim-rise mt-8 max-w-xl text-lg md:text-xl leading-relaxed text-gray-300 text-pretty"
+          style="animation-delay: 450ms"
+        >
+          Diagnosticamos onde sua empresa paga imposto a mais
+          <strong class="text-gray-50 font-medium">hoje</strong>
+          e onde a Reforma vai apertar
+          <strong class="text-gray-50 font-medium">amanhã</strong>.
+          Você só paga sobre a economia comprovada.
+        </p>
 
-      <div class="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
-        <Button href="#sessao-estrategica" variant="primary" size="lg">
-          Agendar Sessão Estratégica
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </Button>
-        <Button href="#metodo" variant="ghost-dark" size="lg">
-          Ver método
-        </Button>
+        <div
+          class="anim-rise mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4"
+          style="animation-delay: 600ms"
+        >
+          <Button href="#sessao-estrategica" variant="primary" size="lg">
+            Agendar Sessão Estratégica
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </Button>
+          <Button href="#metodo" variant="ghost-dark" size="lg">
+            Ver método
+          </Button>
+        </div>
+
+        <!-- Trust strip refinada -->
+        <div
+          class="anim-rise mt-14 pt-8 border-t border-gray-50/10 grid grid-cols-1 sm:grid-cols-3 sm:divide-x sm:divide-gray-50/10"
+          style="animation-delay: 800ms"
+        >
+          <div class="sm:pr-6 py-2">
+            <p class="font-display text-sm font-semibold text-copper-400 tracking-wide uppercase">
+              <span class="opacity-50 mr-1.5">01</span>Atuação
+            </p>
+            <p class="mt-1.5 text-sm text-gray-300 leading-relaxed">Nacional · indústria e varejo</p>
+          </div>
+          <div class="sm:px-6 py-2">
+            <p class="font-display text-sm font-semibold text-copper-400 tracking-wide uppercase">
+              <span class="opacity-50 mr-1.5">02</span>Modelo
+            </p>
+            <p class="mt-1.5 text-sm text-gray-300 leading-relaxed">Honorário 100% de êxito</p>
+          </div>
+          <div class="sm:pl-6 py-2">
+            <p class="font-display text-sm font-semibold text-copper-400 tracking-wide uppercase">
+              <span class="opacity-50 mr-1.5">03</span>Time
+            </p>
+            <p class="mt-1.5 text-sm text-gray-300 leading-relaxed">Jurídico + Contábil + Tech</p>
+          </div>
+        </div>
       </div>
 
-      <ul class="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 max-w-3xl">
-        <li class="flex items-start gap-3">
-          <svg class="mt-0.5 shrink-0 text-copper-400" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M10 2L12.39 6.95L17.5 7.69L13.75 11.41L14.78 16.5L10 14.05L5.22 16.5L6.25 11.41L2.5 7.69L7.61 6.95L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <div>
-            <p class="text-sm font-semibold text-gray-50">Atuação nacional</p>
-            <p class="text-xs text-gray-400 mt-0.5">Empresas em todo o Brasil</p>
+      <!-- Coluna direita: timeline da Reforma (lg+) -->
+      <aside
+        class="anim-rise hidden lg:block lg:col-span-5 xl:col-span-5"
+        style="animation-delay: 700ms"
+        aria-label="Linha do tempo da Reforma Tributária"
+      >
+        <div class="relative bg-navy-800/40 backdrop-blur-sm border border-navy-700/40 rounded-2xl p-8 overflow-hidden">
+          <!-- Glow interno sutil -->
+          <div
+            aria-hidden="true"
+            class="absolute -top-20 -right-20 w-64 h-64 rounded-full opacity-30 blur-[80px] pointer-events-none"
+            style="background: radial-gradient(circle, var(--color-copper-500) 0%, transparent 70%);"
+          ></div>
+
+          <div class="relative">
+            <div class="flex items-center gap-2 mb-1">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="text-copper-400" aria-hidden="true">
+                <circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M7 4V7L9 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+              <p class="text-xs uppercase tracking-widest text-copper-400 font-semibold">Linha do tempo</p>
+            </div>
+            <p class="font-display text-xl text-gray-50 leading-tight">
+              Reforma Tributária
+            </p>
+            <p class="mt-1 text-xs text-gray-400">Ciclo IBS/CBS · 2026 → 2033</p>
+
+            <ol class="relative mt-8 space-y-7 pl-1">
+              <!-- Linha vertical conectora animada -->
+              <span
+                aria-hidden="true"
+                class="anim-timeline-line absolute left-[10px] top-3 bottom-3 w-px bg-gradient-to-b from-copper-500/80 via-copper-500/30 to-copper-500/0"
+              ></span>
+
+              {timelineSteps.map((step) => (
+                <li class="relative flex items-start gap-4 pl-8">
+                  <span
+                    aria-hidden="true"
+                    class={[
+                      'absolute left-0 top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 transition-colors',
+                      step.active
+                        ? 'border-copper-400 bg-copper-500 anim-pulse-active'
+                        : 'border-navy-600 bg-navy-800',
+                    ].join(' ')}
+                  >
+                    {step.active && (
+                      <span class="block h-1.5 w-1.5 rounded-full bg-navy-900"></span>
+                    )}
+                  </span>
+                  <div>
+                    <div class="flex items-baseline gap-2.5">
+                      <span class={[
+                        'font-display text-2xl font-medium tabular-nums tracking-tight',
+                        step.active ? 'text-copper-400' : 'text-gray-100'
+                      ].join(' ')}>
+                        {step.year}
+                      </span>
+                      {step.active && (
+                        <span class="text-[10px] uppercase tracking-widest font-semibold text-copper-400 bg-copper-500/15 border border-copper-500/30 px-2 py-0.5 rounded-full">
+                          agora
+                        </span>
+                      )}
+                    </div>
+                    <p class="mt-0.5 text-sm font-medium text-gray-50 leading-snug">{step.label}</p>
+                    <p class="mt-0.5 text-xs text-gray-400 leading-snug">{step.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+            <div class="mt-8 pt-6 border-t border-navy-700/50">
+              <p class="text-xs text-gray-400 leading-relaxed text-pretty">
+                <span class="text-copper-400 font-semibold">A janela de captura é estreita.</span>
+                Decisões tomadas em 2026 definem como sua empresa atravessa os 6 anos seguintes.
+              </p>
+            </div>
           </div>
-        </li>
-        <li class="flex items-start gap-3">
-          <svg class="mt-0.5 shrink-0 text-copper-400" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M10 1.67L12.575 6.83L18.333 7.66L14.166 11.66L15.15 17.33L10 14.66L4.85 17.33L5.833 11.66L1.667 7.66L7.425 6.83L10 1.67Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" fill="currentColor" fill-opacity="0.15"/>
-          </svg>
-          <div>
-            <p class="text-sm font-semibold text-gray-50">Modelo de êxito</p>
-            <p class="text-xs text-gray-400 mt-0.5">Você só paga se houver economia</p>
-          </div>
-        </li>
-        <li class="flex items-start gap-3">
-          <svg class="mt-0.5 shrink-0 text-copper-400" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M2.5 5.83L10 1.67L17.5 5.83V14.17L10 18.33L2.5 14.17V5.83Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M6 9.5L9 12.5L14 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div>
-            <p class="text-sm font-semibold text-gray-50">Jurídico + Contábil + Tech</p>
-            <p class="text-xs text-gray-400 mt-0.5">Time integrado, parecer assinado</p>
-          </div>
-        </li>
-      </ul>
+        </div>
+      </aside>
     </div>
   </Container>
 
-  <!-- Fade inferior para transição suave -->
+  <!-- Scroll indicator -->
   <div
     aria-hidden="true"
-    class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-gray-100"
+    class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 hidden md:flex"
+  >
+    <span class="text-[10px] uppercase tracking-[0.25em] text-gray-500 font-semibold">Role</span>
+    <span class="anim-scroll-bounce inline-flex">
+      <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
+        <path d="M7 2V18M7 18L2 13M7 18L12 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-gray-500"/>
+      </svg>
+    </span>
+  </div>
+
+  <!-- Fade inferior pra transição -->
+  <div
+    aria-hidden="true"
+    class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-gray-100 pointer-events-none"
   ></div>
 </section>
